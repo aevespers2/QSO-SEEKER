@@ -1,0 +1,102 @@
+name: Security Change Record
+
+on:
+  push:
+    paths:
+      - "security/**"
+      - ".github/AI_INPUT_SECURITY.md"
+      - "unicernal_search/**"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+env:
+  POLICY_ID: QSO-SEEKER-NOTIFICATION-POLICY-v1
+
+jobs:
+  record:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          fetch-depth: 2
+
+      - name: Build canonical event record
+        id: event
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p security-events
+          event_id="QSO-${GITHUB_REPOSITORY_ID}-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
+          timestamp_utc="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+          git diff --name-only "${GITHUB_EVENT_BEFORE:-HEAD^}" "${GITHUB_SHA}" 2>/dev/null | sort > security-events/changed-paths.txt || true
+          find security .github unicernal_search -type f -print0 2>/dev/null | sort -z | xargs -0 sha256sum > security-events/sha256-manifest.txt || true
+          manifest_sha="$(sha256sum security-events/sha256-manifest.txt | awk '{print $1}')"
+          {
+            echo "event_id=$event_id"
+            echo "timestamp_utc=$timestamp_utc"
+            echo "manifest_sha=$manifest_sha"
+          } >> "$GITHUB_OUTPUT"
+          cat > security-events/event.json <<EOF
+          {
+            "policy_id": "${POLICY_ID}",
+            "event_id": "${event_id}",
+            "repository": "${GITHUB_REPOSITORY}",
+            "commit_sha": "${GITHUB_SHA}",
+            "timestamp_utc": "${timestamp_utc}",
+            "workflow_run_id": "${GITHUB_RUN_ID}",
+            "sha256_manifest": "${manifest_sha}"
+          }
+          EOF
+
+      - name: Upload immutable workflow artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: security-event-${{ steps.event.outputs.event_id }}
+          path: security-events/
+          if-no-files-found: error
+          retention-days: 90
+
+      - name: Create public GitHub issue record
+        env:
+          GH_TOKEN: ${{ github.token }}
+          EVENT_ID: ${{ steps.event.outputs.event_id }}
+          TIMESTAMP_UTC: ${{ steps.event.outputs.timestamp_utc }}
+          MANIFEST_SHA: ${{ steps.event.outputs.manifest_sha }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          changed="$(sed 's/^/- `/' security-events/changed-paths.txt | sed 's/$/`/' || true)"
+          gh issue create \
+            --title "Security record: ${EVENT_ID}" \
+            --body "Policy: ${POLICY_ID}
+
+Event ID: ${EVENT_ID}
+Repository: ${GITHUB_REPOSITORY}
+Commit: ${GITHUB_SHA}
+UTC timestamp: ${TIMESTAMP_UTC}
+Manifest SHA-256: ${MANIFEST_SHA}
+
+Changed paths:
+${changed}
+
+This issue is an automated public integrity record. It contains no secrets or sensitive repository content."
+
+      - name: Optional external notifications
+        if: ${{ secrets.SECURITY_EMAIL_WEBHOOK != '' || secrets.SECURITY_X_WEBHOOK != '' }}
+        env:
+          EMAIL_WEBHOOK: ${{ secrets.SECURITY_EMAIL_WEBHOOK }}
+          X_WEBHOOK: ${{ secrets.SECURITY_X_WEBHOOK }}
+          EVENT_ID: ${{ steps.event.outputs.event_id }}
+          MANIFEST_SHA: ${{ steps.event.outputs.manifest_sha }}
+          TIMESTAMP_UTC: ${{ steps.event.outputs.timestamp_utc }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          payload=$(printf '{"event_id":"%s","repository":"%s","commit_sha":"%s","timestamp_utc":"%s","sha256_manifest":"%s"}' "$EVENT_ID" "$GITHUB_REPOSITORY" "$GITHUB_SHA" "$TIMESTAMP_UTC" "$MANIFEST_SHA")
+          if [ -n "${EMAIL_WEBHOOK}" ]; then curl --fail --silent --show-error --max-time 15 -H 'Content-Type: application/json' -d "$payload" "$EMAIL_WEBHOOK"; fi
+          if [ -n "${X_WEBHOOK}" ]; then curl --fail --silent --show-error --max-time 15 -H 'Content-Type: application/json' -d "$payload" "$X_WEBHOOK"; fi
