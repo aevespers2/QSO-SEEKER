@@ -1,0 +1,17 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "unicernal-search-gateway"
+version = "0.1.0"
+description = "Schema-first, non-executing search and ingestion gateway for bounded QSO experiments"
+requires-python = ">=3.11"
+dependencies = ["pydantic>=2.6"]
+
+[project.scripts]
+unicernal-search = "unicernal_search.cli:main"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
