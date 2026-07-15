@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "interval_minutes": 30,
+  "repositories": [
+    {
+      "repository": "aevespers2/QSO-SEEKER",
+      "enabled": true,
+      "scan": ["description", "topics", "readme", "recent_commits"]
+    },
+    {
+      "repository": "GeorgeTownSabatical/qso-fabric",
+      "enabled": true,
+      "scan": ["description", "topics", "readme", "recent_commits"]
+    }
+  ],
+  "limits": {
+    "maximum_repositories": 25,
+    "recent_commits_per_repository": 10,
+    "maximum_text_characters_per_record": 120000
+  },
+  "alert_flags": [
+    "prompt_injection",
+    "execution_request",
+    "credential_access",
+    "network_pivot",
+    "concealed_unicode",
+    "mixed_script_text",
+    "emoji_or_symbol_present"
+  ]
+}
