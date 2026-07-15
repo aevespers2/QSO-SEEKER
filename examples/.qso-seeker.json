@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "enabled": true,
+  "issue_notifications": true,
+  "consent_marker": "QSO-SEEKER-OPT-IN-v1",
+  "scan_interval_hours": 24,
+  "scan": [
+    "description",
+    "topics",
+    "readme",
+    "recent_commits"
+  ],
+  "minimum_alert_score": 70,
+  "deduplicate_hours": 168,
+  "labels": [
+    "security",
+    "qso-seeker"
+  ],
+  "contact": "Repository security maintainer"
+}
