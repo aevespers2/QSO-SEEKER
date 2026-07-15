@@ -1,0 +1,36 @@
+name: Public QSO-SEEKER scan
+
+description: Request a public, read-only security scan of one public GitHub repository. Everything submitted and produced is public.
+title: "[QSO scan] owner/repository"
+labels:
+  - qso-search-request
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Public-data notice
+        This request, its repository target, workflow logs, findings, JSON report, PDF report, and resulting discussion are public. Do not submit secrets, private URLs, personal data, access tokens, cookies, or credentials. Submitted requests and derived non-sensitive metrics may be retained as a public research dataset for improving QSO-SEEKER.
+  - type: input
+    id: repository
+    attributes:
+      label: Public repository
+      description: Enter exactly one public GitHub repository as owner/name.
+      placeholder: octocat/Hello-World
+    validations:
+      required: true
+  - type: dropdown
+    id: scope
+    attributes:
+      label: Scan scope
+      options:
+        - metadata-and-readme
+        - metadata-readme-and-recent-commits
+    validations:
+      required: true
+  - type: checkboxes
+    id: consent
+    attributes:
+      label: Public logging consent
+      options:
+        - label: I understand this request and its results will be public and may be retained in a public research dataset.
+          required: true
