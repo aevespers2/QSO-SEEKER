@@ -1,0 +1,27 @@
+{
+  "policy_id": "QSO-SEEKER-NOTIFICATION-POLICY-v1",
+  "event_scope": [
+    "security/**",
+    ".github/AI_INPUT_SECURITY.md",
+    "unicernal_search/**"
+  ],
+  "required_records": [
+    "git_commit",
+    "github_issue",
+    "workflow_artifact"
+  ],
+  "optional_external_channels": [
+    "email",
+    "x_com"
+  ],
+  "event_fields": [
+    "event_id",
+    "repository",
+    "commit_sha",
+    "timestamp_utc",
+    "changed_paths",
+    "sha256_manifest"
+  ],
+  "privacy_rule": "Public notifications contain only event identifiers, timestamps, repository names, commit SHAs, changed paths, and cryptographic digests. No secrets or sensitive content.",
+  "integrity_rule": "Every channel must carry the same event_id and sha256_manifest."
+}
