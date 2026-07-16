@@ -1,60 +1,70 @@
 # Release Plan
 
 ## Current Decision
-Status: `BLOCKED`
 
-No retrieval or sanitization work is currently eligible for release. P0 is only `READY`, every punch-list and quality-gate item is unchecked, the current public-scan design does not yet separate retrieval and sanitization into independently permissioned jobs, and reviewed commit `e390be468ba99585ba3467cd8b0473d2090fd3b4` has no reported commit-status checks.
+Status: `BLOCKED — SECURITY ISOLATION AND CONTRACT EVIDENCE REQUIRED`
+
+QSO-SEEKER has a defined read-only hostile-input boundary, but no retrieval/sanitization release is eligible. P0 remains `READY`, every punch-list item is unchecked, retrieval and sanitization are not yet independently permissioned, and candidate head `d4b2a4933fc5426e26c139d628efec293813f8c4` lacks current pytest, CLI, PDF, workflow, deterministic-contract, adversarial, security, documentation, provenance, checksum, and rollback evidence.
 
 ## Versioning
+
 - Scheme: Semantic Versioning for the CLI, canonical-record schema, attribution sidecar, and workflow contract.
 - First eligible candidate: `0.1.0-alpha.1`.
-- Backward-compatible fields and rejection reasons may be minor changes; security-boundary, required-field, transformation, or hash changes require explicit compatibility review and migration fixtures.
+- Compatible fields/rejection reasons may be minor changes.
+- Security-boundary, required-field, transformation, canonicalization, or hash changes require explicit compatibility review and migration fixtures.
 
-## Candidate Scope
-- Reproducible pytest, security-envelope, CLI JSON, PDF report, and workflow-syntax baseline.
-- Versioned canonical-record and attribution-sidecar schemas with deterministic fixtures and hashes.
-- Separate read-only fetch and credential-free sanitizer jobs with artifact-only handoff and verified digest.
-- Adversarial fixtures for Unicode concealment, prompt injection, executable types, oversized input, binaries, and malformed attribution.
-- Minimum-permission, pinned-runtime workflows and accurate isolation claims.
+## Release Scope
+
+- Reproducible pytest, security-envelope, CLI JSON, PDF report, and workflow baseline.
+- Versioned canonical-record and attribution-sidecar schemas with deterministic accepted/rejected fixtures and hashes.
+- Separate read-only retrieval and credential-free, network-free sanitizer jobs with artifact-only handoff and digest verification.
+- Adversarial fixtures for Unicode concealment, prompt injection, executable/binary types, oversized input, malformed attribution, and digest mismatch.
+- Accurate trust-boundary documentation, security reports, checksums, provenance, and rollback.
 
 ## Selected Completed Work
-None. The repository boundaries are defined, but no test, contract, workflow-split, or adversarial-fixture work has completed acceptance evidence.
+
+None. Existing boundaries, source, and documentation are candidate inputs, but P0-P2 have no accepted evidence and the required isolation model is not implemented.
 
 ## Planned Changelog Entries
-- `Added`: versioned canonical-record and attribution-sidecar contracts, fixtures, and deterministic hashes.
+
+- `Added`: versioned canonical-record/attribution contracts, deterministic fixtures, and hashes.
 - `Security`: credential-free sanitizer job, artifact-only handoff, fail-closed digest verification, and adversarial conformance suite.
 - `Changed`: workflow permissions and documentation describing actual rather than implied isolation.
-- `Fixed`: deterministic transformation, rejection, provenance, or report-generation defects found during baseline testing.
-- `Documentation`: hostile-input model, exact commands, limitations, failure modes, and consumer validation guidance.
+- `Fixed`: transformation, rejection, provenance, digest, or report-generation defects found during verification.
+- `Release`: source/package artifacts, reports, SBOM where applicable, checksums, provenance, and approval.
 
 ## Acceptance Gates
+
 | Gate | Status | Requirement |
 |---|---|---|
-| Task completion | FAIL | P0, P1, and P2 are `DONE` with linked commits and workflow evidence. |
-| Tests/CLI/reports | NO EVIDENCE | Full pytest, envelope verifier, CLI JSON, PDF report, and syntax checks pass. |
-| Contract determinism | NO EVIDENCE | Schemas and fixtures reproduce identical transformations, decisions, and hashes. |
-| Security isolation | FAIL | Retrieval and sanitizer currently share a job; credential-free artifact-only separation is required. |
-| Adversarial validation | NO EVIDENCE | Hostile-input fixtures produce deterministic accepted/rejected outputs without execution. |
-| Documentation | NO EVIDENCE | Trust boundary, transformations, rejection reasons, provenance, limits, and actual isolation are documented. |
-| Provenance | NO EVIDENCE | Commit, workflow runs, tool versions, fixture hashes, reports, checksums, and attestations recorded. |
-| Approval | PENDING | Release approval after all blocking gates pass. |
+| Task completion | FAIL | P0, P1, and P2 are `DONE` with linked commits, commands, and workflow evidence. |
+| Tests/CLI/reports | NO EVIDENCE | Full pytest, envelope verifier, CLI JSON, PDF report, and workflow syntax checks pass. |
+| Contract determinism | NO EVIDENCE | Schemas and fixtures reproduce identical transformations, decisions, rejection reasons, and hashes. |
+| Security isolation | FAIL | Retrieval and sanitizer are independently permissioned; sanitizer has no credentials or network and verifies the artifact digest. |
+| Adversarial validation | NO EVIDENCE | Hostile/malformed inputs produce deterministic accepted/rejected outputs without execution or provenance loss. |
+| Documentation | NO EVIDENCE | Trust boundary, transformations, limits, rejection reasons, provenance, commands, and actual isolation are verified. |
+| Provenance | NO EVIDENCE | Commit, workflow runs, tool versions, fixture/report hashes, artifacts, checksums, and attestations are retained. |
+| Approval | PENDING | Explicit release approval after all blocking gates pass. |
 
 ## Artifact Requirements
+
 - Versioned canonical-record and attribution-sidecar schemas.
-- Positive and adversarial fixture bundle with deterministic expected outputs and hashes.
-- CLI/package or source archive, PDF evidence report sample, and workflow definitions.
-- Test, security, and workflow-permission reports.
-- SBOM where packaged, checksums, and provenance manifest.
+- Positive, negative, adversarial, boundary, and digest-mismatch fixtures with expected outputs and hashes.
+- Source/package artifact, CLI sample, PDF evidence report, and independently permissioned workflow definitions.
+- Complete test, security, workflow-permission, and documentation reports.
+- SBOM where applicable, SHA-256 checksums, provenance manifest, and rollback evidence.
 
 ## Rollback Criteria
-Rollback if fetched material is executed, sanitizer credentials or network access are introduced, artifact digests are not verified, accepted/rejected results become nondeterministic, provenance is lost, report outputs diverge from canonical records, or documentation overstates isolation. Restore the prior verified tag and retain rejected artifacts for forensic comparison.
+
+Rollback if fetched material executes, sanitizer credentials or network access are introduced, artifact digests are not verified, accepted/rejected results become nondeterministic, provenance is lost, reports diverge from canonical records, or documentation overstates isolation. Restore the prior verified state and retain rejected artifacts and reports for comparison.
 
 ## Unresolved Blockers
+
 - P0 baseline, P1 contracts, and P2 workflow separation are incomplete.
-- Retrieval and sanitization still lack independently permissioned process separation.
-- No test, CLI, PDF, deterministic fixture, adversarial, security, documentation, or provenance evidence is recorded.
-- `QuantumStateObjects` cannot validate canonical-record fixtures until P1 is complete.
-- No CI status is attached to the reviewed commit.
+- Retrieval and sanitization still share a logical/workflow boundary rather than independently permissioned jobs.
+- No current test, CLI, PDF, deterministic fixture, adversarial, security, documentation, provenance, checksum, or rollback evidence exists.
+- QuantumStateObjects cannot consume a verified canonical-record contract until P1 is published.
 
 ## Release Log
-- 2026-07-16: QSO-SEEKER candidate evaluated and held `BLOCKED`; no completed work selected.
+
+- 2026-07-16: Aligned the candidate with the secure read-only retrieval MVP; release remains blocked by isolation and deterministic contract evidence.
