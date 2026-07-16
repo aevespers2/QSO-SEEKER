@@ -24,11 +24,11 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           persist-credentials: false
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: "3.11"
 
@@ -94,7 +94,7 @@ jobs:
           unicernal-search sanitize scan/input.json --output scan/sanitized.json --audit scan/audit.json --report scan/evidence.json --pdf scan/evidence.pdf
 
       - name: Upload public scan artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: qso-public-scan-${{ github.run_id }}
           path: scan/
