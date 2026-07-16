@@ -3,20 +3,22 @@
 All notable product, architecture, implementation, release, and deployment changes are recorded here.
 
 ## Unreleased
+
 ### Product
-- Product objectives, MVP scope, priorities, success criteria, and non-goals are maintained by the Product Manager.
+- 2026-07-16 — Defined the MVP as a read-only, fail-closed conversion of hostile public input into deterministic inert canonical records and attribution sidecars.
+- 2026-07-16 — Prioritized credential-free sanitizer separation and adversarial conformance before broader retrieval coverage or QSO runtime integration.
 
 ### Architecture
-- Architecture decisions and task sequencing are maintained through `taskchain.md`.
+- The security boundary requires artifact-only handoff with verified digest; the current single-job workflow remains logical separation only.
 
 ### Implementation
-- Builder work is tracked through `punchlist.md` with verification evidence.
+- Existing code, tests, CLI, report, and workflow surfaces remain candidate assets pending current reproducible evidence.
 
 ### Release
-- Release readiness, versioning, artifacts, and rollback criteria are tracked in `release.md`.
+- The candidate remains blocked until baseline checks, versioned contracts, job separation, adversarial fixtures, documentation, checksums, and provenance pass.
 
 ### Deployment
-- Deployment environments, health checks, validation, and rollback events are tracked in `deploy.md`.
+- No authenticated retrieval, private-source access, or executable-content processing is authorized.
 
 ## Entry Format
 - Date
