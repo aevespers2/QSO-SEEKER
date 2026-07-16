@@ -2,6 +2,14 @@
 
 A deliberately non-executing search and ingestion layer for bounded QSO experiments.
 
+## Documentation
+
+- [Project guide and release boundaries](docs/index.md)
+- [Security architecture and handoff contract](docs/security-architecture.md)
+- [Task chain](taskchain.md)
+- [Release plan](release.md)
+- [Changelog](changelog.md)
+
 ## Security model
 
 The gateway treats every repository response as hostile data.
@@ -41,3 +49,5 @@ python -m unicernal_search.cli input.json --output sanitized.json --audit audit.
 ## Recommended deployment boundary
 
 The network-enabled fetcher should be a separate process or microVM. It passes bounded JSON records to this gateway. QSOs receive only the gateway's canonical output, never raw network responses, archives, Git objects, package files, or repository credentials.
+
+The current public-scan workflow may still perform retrieval and sanitization within one job. Until separately permissioned jobs and a verified artifact handoff are implemented, documentation must describe the separation as logical rather than process or microVM isolation.
