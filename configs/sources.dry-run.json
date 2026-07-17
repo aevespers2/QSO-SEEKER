@@ -1,6 +1,8 @@
 {
+  "registry_version": "1.0.0",
   "mode": "dry-run",
   "network_enabled": false,
+  "deterministic_retrieved_at": "2026-07-17T00:00:00+00:00",
   "sources": [
     {
       "source_id": "mock-qso-fabric-readme",
