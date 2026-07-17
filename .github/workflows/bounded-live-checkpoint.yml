@@ -1,0 +1,66 @@
+name: QSO-SEEKER Bounded Live Checkpoint
+
+on:
+  pull_request:
+    paths:
+      - "scripts/bounded_live_collection.py"
+      - "configs/sources.live.checkpoint.json"
+      - ".github/workflows/bounded-live-checkpoint.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  checkpoint-one:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out exact submitted revision
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+
+      - name: Assert exact source revision
+        env:
+          EXPECTED_HEAD: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.sha }}
+        run: test "$(git rev-parse HEAD)" = "$EXPECTED_HEAD"
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Compile bounded collector
+        run: python -m py_compile scripts/bounded_live_collection.py
+
+      - name: Run bounded read-only retrieval
+        run: |
+          rm -rf artifacts/live-checkpoint-1
+          python scripts/bounded_live_collection.py \
+            --config configs/sources.live.checkpoint.json \
+            --output artifacts/live-checkpoint-1 \
+            --enable-network
+
+      - name: Verify checkpoint freeze
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          summary = json.loads(Path("artifacts/live-checkpoint-1/summary.json").read_text())
+          assert summary["status"] == "checkpoint-ready"
+          assert summary["checkpoint"] == 1
+          assert summary["network_used"] is True
+          assert summary["automatic_release"] is False
+          assert summary["human_review_required"] is True
+          assert summary["source_count"] == 1
+          PY
+
+      - name: Upload checkpoint evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: qso-seeker-live-checkpoint-${{ github.run_id }}
+          path: artifacts/live-checkpoint-1/
+          if-no-files-found: error
+          retention-days: 14
