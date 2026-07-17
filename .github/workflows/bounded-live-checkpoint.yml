@@ -35,7 +35,7 @@ jobs:
       - name: Compile bounded collector
         run: python -m py_compile scripts/bounded_live_collection.py
 
-      - name: Run bounded read-only retrieval
+      - name: Run 100-unit bounded checkpoint
         run: |
           rm -rf artifacts/live-checkpoint-1
           python scripts/bounded_live_collection.py \
@@ -43,18 +43,28 @@ jobs:
             --output artifacts/live-checkpoint-1 \
             --enable-network
 
-      - name: Verify checkpoint freeze
+      - name: Verify checkpoint freeze and scale
         run: |
           python - <<'PY'
           import json
           from pathlib import Path
-          summary = json.loads(Path("artifacts/live-checkpoint-1/summary.json").read_text())
+          root = Path("artifacts/live-checkpoint-1")
+          summary = json.loads((root / "summary.json").read_text())
           assert summary["status"] == "checkpoint-ready"
           assert summary["checkpoint"] == 1
           assert summary["network_used"] is True
           assert summary["automatic_release"] is False
           assert summary["human_review_required"] is True
           assert summary["source_count"] == 1
+          assert summary["checkpoint_units_per_source"] == 100
+          assert summary["checkpoint_task_count"] == 100
+          assert len(summary["checkpoint_task_hashes"]) == 100
+          assert len(list((root / "checkpoint-tasks").glob("*.json"))) == 100
+          for path in (root / "checkpoint-tasks").glob("*.json"):
+              task = json.loads(path.read_text())
+              assert task["network_authority"] is False
+              assert task["automatic_release"] is False
+              assert task["human_review_required"] is True
           PY
 
       - name: Upload checkpoint evidence
