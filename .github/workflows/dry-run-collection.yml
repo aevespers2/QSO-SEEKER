@@ -1,0 +1,92 @@
+name: QSO-SEEKER Dry-Run Collection
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - "scripts/dry_run_collection.py"
+      - "configs/sources.dry-run.json"
+      - ".github/workflows/dry-run-collection.yml"
+  schedule:
+    - cron: "17 9 * * *"
+
+permissions:
+  contents: read
+
+env:
+  PYTHONHASHSEED: "0"
+
+jobs:
+  dry-run-collection:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out exact submitted revision
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Compile dry-run routine
+        run: python -m py_compile scripts/dry_run_collection.py scripts/materialize_data_collection_scaffold.py
+
+      - name: Validate scaffold plan and dry-run registry
+        run: |
+          python scripts/materialize_data_collection_scaffold.py > scaffold-dry-run.txt
+          python -m json.tool roadmap/data-collection-plan.json > /dev/null
+          python -m json.tool configs/sources.dry-run.json > /dev/null
+
+      - name: Execute network-disabled collection rehearsal
+        run: |
+          rm -rf artifacts/dry-run
+          python scripts/dry_run_collection.py \
+            --config configs/sources.dry-run.json \
+            --output artifacts/dry-run
+
+      - name: Verify generated records and provenance
+        run: |
+          python - <<'PY'
+          import hashlib
+          import json
+          from pathlib import Path
+
+          root = Path("artifacts/dry-run")
+          summary = json.loads((root / "summary.json").read_text())
+          assert summary["status"] == "pass"
+          assert summary["mode"] == "dry-run"
+          assert summary["network_used"] is False
+          assert summary["source_count"] > 0
+          assert summary["record_count"] == summary["field_envelope_count"]
+
+          for path in sorted((root / "records").glob("*.json")):
+              record = json.loads(path.read_text())
+              assert record["network_used"] is False
+              assert record["executable"] is False
+              assert record["untrusted_text"] is True
+              assert path.stem == record["record_sha256"]
+
+          for path in sorted((root / "field-envelopes").glob("*.json")):
+              envelope = json.loads(path.read_text())
+              assert envelope["mode"] == "dry-run"
+              assert envelope["raw_network_payload_available"] is False
+              assert envelope["human_review_required"] is True
+              assert path.stem == envelope["envelope_sha256"]
+
+          provenance = json.loads((root / "provenance.json").read_text())
+          assert provenance["network_used"] is False
+          assert len(provenance["record_hashes"]) == summary["record_count"]
+          PY
+
+      - name: Upload dry-run evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: qso-seeker-dry-run-${{ github.run_id }}
+          path: |
+            artifacts/dry-run/
+            scaffold-dry-run.txt
+          if-no-files-found: error
+          retention-days: 14
