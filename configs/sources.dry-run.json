@@ -1,0 +1,38 @@
+{
+  "mode": "dry-run",
+  "network_enabled": false,
+  "sources": [
+    {
+      "source_id": "mock-qso-fabric-readme",
+      "adapter": "mock",
+      "authority": "public-test-fixture",
+      "topic": "qso/research/runtime",
+      "content_type": "text/markdown",
+      "retention_days": 7,
+      "sensitivity": "public",
+      "purpose": "exercise collection, sanitization, hashing, provenance, and Digitalis publication without network access",
+      "fixture": {
+        "repository": "aevespers2/QSO-FABRIC",
+        "path": "README.md",
+        "url": "mock://aevespers2/QSO-FABRIC/README.md",
+        "content": "# QSO-FABRIC\nBounded runtime dry-run fixture. This record is non-executable test data."
+      }
+    },
+    {
+      "source_id": "mock-qso-genomes-registry",
+      "adapter": "mock",
+      "authority": "public-test-fixture",
+      "topic": "qso/research/genomes",
+      "content_type": "application/json",
+      "retention_days": 7,
+      "sensitivity": "public",
+      "purpose": "exercise deduplication and content-addressed evidence references",
+      "fixture": {
+        "repository": "aevespers2/QSO-GENOMES",
+        "path": "roles/experimenters.v1.json",
+        "url": "mock://aevespers2/QSO-GENOMES/roles/experimenters.v1.json",
+        "content": "{\"registry_id\":\"qso-experimenters-v1\",\"mode\":\"dry-run\"}"
+      }
+    }
+  ]
+}
