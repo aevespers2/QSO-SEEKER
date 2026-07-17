@@ -1,0 +1,18 @@
+{
+  "registry_version": "1.0.0",
+  "mode": "live-bounded",
+  "network_enabled": true,
+  "allowlisted_hosts": [
+    "raw.githubusercontent.com"
+  ],
+  "max_response_bytes": 250000,
+  "timeout_seconds": 15,
+  "sources": [
+    {
+      "source_id": "qso-seeker-readme-main",
+      "url": "https://raw.githubusercontent.com/aevespers2/QSO-SEEKER/main/README.md",
+      "topic": "qso-seeker-security-boundary",
+      "purpose": "Verify bounded read-only retrieval and checkpoint handoff"
+    }
+  ]
+}
