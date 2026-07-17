@@ -12,6 +12,9 @@ dependencies = ["pydantic>=2.6"]
 [project.scripts]
 unicernal-search = "unicernal_search.cli:main"
 
+[tool.setuptools.packages.find]
+include = ["unicernal_search*"]
+
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 addopts = "-q"
