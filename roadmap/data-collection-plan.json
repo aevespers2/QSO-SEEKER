@@ -1,0 +1,21 @@
+{
+  "repository": "QSO-SEEKER",
+  "objective": "Address all eleven data-collection blockers and publish sanitized evidence into the Digital Consciousness Field.",
+  "blockers_addressed": [1,2,3,4,5,6,7,8,9,10,11],
+  "groups": {
+    "contracts": ["source-registry.schema.json", "fetch-request.schema.json", "fetch-response.schema.json", "raw-retrieval-metadata.schema.json", "canonical-record.schema.json", "sanitization-audit.schema.json", "evidence-bundle.schema.json", "collection-job.schema.json", "checkpoint.schema.json", "dead-letter.schema.json"],
+    "configs": ["sources.example.json", "collection-policy.json", "retention-policy.json", "privacy-policy.json", "licensing-policy.json", "rate-limits.json"],
+    "unicernal_search/adapters": ["base.py", "http.py", "github.py", "filesystem.py", "mock.py"],
+    "unicernal_search/registry": ["source.py", "loader.py", "validator.py", "authorization.py"],
+    "unicernal_search/collection": ["request.py", "response.py", "collector.py", "scheduler.py", "queue.py", "retry.py", "backoff.py", "checkpoint.py", "dead_letter.py"],
+    "unicernal_search/sanitization": ["pipeline.py", "unicode.py", "markup.py", "executable.py", "prompt_injection.py", "limits.py", "audit.py"],
+    "unicernal_search/records": ["canonical.py", "hashing.py", "deduplication.py", "versioning.py", "lineage.py"],
+    "unicernal_search/storage": ["content_store.py", "metadata_store.py", "index.py", "retention.py", "deletion.py"],
+    "unicernal_search/provenance": ["request_link.py", "retrieval_link.py", "sanitization_link.py", "publication_link.py", "verification.py"],
+    "unicernal_search/digitalis": ["publisher.py", "envelope.py", "topic_mapper.py", "capability.py", "acknowledgement.py"],
+    "unicernal_search/privacy": ["classification.py", "minimization.py", "redaction.py", "consent.py", "access_control.py"],
+    "tests": ["test_source_registry.py", "test_fetch_adapter_isolation.py", "test_scheduler_checkpointing.py", "test_retry_backoff.py", "test_dead_letter.py", "test_sanitization.py", "test_deduplication.py", "test_versioning.py", "test_retention_deletion.py", "test_privacy_minimization.py", "test_provenance_chain.py", "test_digitalis_publication.py", "test_no_raw_payload_to_qso.py"],
+    "docs": ["architecture.md", "source-registry.md", "fetch-adapter-boundary.md", "collection-lifecycle.md", "storage-model.md", "deduplication-and-versioning.md", "privacy-and-authority.md", "provenance-chain.md", "digitalis-publication.md", "operations.md", "threat-model.md"],
+    ".github/workflows": ["test.yml", "schema-validation.yml", "adapter-isolation.yml", "provenance-replay.yml", "security.yml"]
+  }
+}
