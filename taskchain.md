@@ -20,10 +20,20 @@ States: `PROPOSED` · `READY` · `IN PROGRESS` · `BLOCKED` · `REVIEW` · `DONE
 
 | Priority | Task | Owner | Depends on | Status | Acceptance criteria |
 |---|---|---|---|---|---|
-| P0 | Establish a reproducible security and CLI baseline | QSOBuilder | — | READY | Full pytest, security-envelope, CLI JSON, PDF report, and workflow checks pass or failures have retained reproducers; no fetched content executes. |
+| P0 | Establish a reproducible security and CLI baseline | QSOBuilder | — | IN PROGRESS | Full pytest, security-envelope, CLI JSON, PDF report, and workflow checks pass or failures have retained reproducers; no fetched content executes. |
 | P1 | Version the canonical record and attribution-sidecar contract | QSOBuilder | P0 | PROPOSED | Schemas and fixtures define fields, transformations, limits, rejection reasons, provenance, hashes, and independent consumer validation. |
 | P2 | Split retrieval and sanitizer into independently permissioned jobs | QSOBuilder | P0 | PROPOSED | Fetch is read-only; sanitizer receives a verified inert artifact, has no network/repository credential, and fails closed on missing or changed digest. |
 | P3 | Publish adversarial conformance fixtures | Builder | P1 and P2 | PROPOSED | Hostile and malformed inputs produce deterministic accepted/rejected outputs without execution or provenance loss. |
+
+## P0 baseline candidate — PR #2
+
+**Status:** `REVIEW — CI FAILURE BLOCKS ACCEPTANCE`
+
+PR #2 is the active bounded P0 candidate at head `9e2d83e4156b77e177a4e478de3d46271174f77a`. It records local candidate evidence from implementation/test commit `1c55ee45edbb4fe05c27efcb9c4c6d4e375a9321`: the security-envelope verifier, 11 pytest tests, Python compilation, CLI JSON/audit/evidence/PDF replay, workflow YAML and read-only permission inspection, and the tracked-text hidden-control scan passed in the documented local environment. The candidate also repairs deterministic whitespace collapse and replaces fragile dependency-string parsing with standard-library `tomllib` plus focused tests.
+
+The attached Security Envelope workflow run `29564325393` failed at `Install minimal test environment`. Verification, pytest, and hidden-control steps were therefore skipped. The local replay was assembled through the GitHub Contents API because direct cloning was unavailable in that runner, so it is useful candidate evidence but not a substitute for a successful submitted-head or independently reviewed clean-checkout replay.
+
+**Directive:** preserve PR #2 as the single P0 path; diagnose the installation failure; make only the bounded dependency/workflow correction required; rerun the complete workflow at the exact submitted head with retained logs; and keep P1/P2 work from being treated as accepted until P0 is independently reproducible. The repository remains merge-blocked for release even though GitHub currently reports the PR itself as mergeable. `release.md` is stale where it says no current baseline evidence exists and should be reconciled only after the CI gate is satisfied.
 
 ## Architectural boundary
 
@@ -32,3 +42,5 @@ Until P2 is complete, retrieval and sanitization are only logically separated. D
 ## Builder Log
 
 Record commits, workflow runs, exact test commands/results, fixture and artifact hashes, permission evidence, rejected samples, residual risks, and follow-ups.
+
+- 2026-07-17 — Reviewed PR #2 at head `9e2d83e4156b77e177a4e478de3d46271174f77a`. Local candidate checks and recorded artifact hashes narrow P0, but workflow run `29564325393` failed during environment installation before the verifier or tests executed. P0 is `IN PROGRESS`; priority is unchanged, and P1/P2 remain unaccepted until a successful exact-head or independent clean-checkout replay is retained.
