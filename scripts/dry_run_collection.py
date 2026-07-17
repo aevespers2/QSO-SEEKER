@@ -11,7 +11,6 @@ import argparse
 import hashlib
 import json
 import re
-from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
@@ -46,10 +45,15 @@ def sanitize(content: str) -> tuple[str, list[str]]:
 
 
 def validate_registry(registry: dict[str, Any]) -> list[dict[str, Any]]:
+    if registry.get("registry_version") != "1.0.0":
+        raise ValueError("registry_version must be 1.0.0")
     if registry.get("mode") != "dry-run":
         raise ValueError("registry mode must be dry-run")
     if registry.get("network_enabled") is not False:
         raise ValueError("network_enabled must be false")
+    retrieved_at = registry.get("deterministic_retrieved_at")
+    if not isinstance(retrieved_at, str) or not retrieved_at:
+        raise ValueError("deterministic_retrieved_at is required")
     sources = registry.get("sources")
     if not isinstance(sources, list) or not sources:
         raise ValueError("sources must be a non-empty list")
@@ -63,6 +67,8 @@ def validate_registry(registry: dict[str, Any]) -> list[dict[str, Any]]:
             raise ValueError("dry-run permits only the mock adapter")
         if source["source_id"] in seen:
             raise ValueError(f"duplicate source_id: {source['source_id']}")
+        if not isinstance(source["retention_days"], int) or source["retention_days"] < 1:
+            raise ValueError(f"source {source['source_id']} has invalid retention_days")
         seen.add(source["source_id"])
         fixture = source["fixture"]
         if not isinstance(fixture, dict) or "content" not in fixture:
@@ -71,7 +77,8 @@ def validate_registry(registry: dict[str, Any]) -> list[dict[str, Any]]:
 
 
 def run(config_path: Path, output_dir: Path) -> dict[str, Any]:
-    registry = json.loads(config_path.read_text(encoding="utf-8"))
+    config_text = config_path.read_text(encoding="utf-8")
+    registry = json.loads(config_text)
     sources = validate_registry(registry)
     output_dir.mkdir(parents=True, exist_ok=True)
     records_dir = output_dir / "records"
@@ -80,7 +87,7 @@ def run(config_path: Path, output_dir: Path) -> dict[str, Any]:
     envelopes_dir.mkdir(exist_ok=True)
 
     run_id = sha256_text(canonical_json(registry))[:16]
-    retrieved_at = datetime.now(timezone.utc).replace(microsecond=0).isoformat()
+    retrieved_at = registry["deterministic_retrieved_at"]
     records: list[dict[str, Any]] = []
     envelopes: list[dict[str, Any]] = []
     deduplicated: dict[str, str] = {}
@@ -144,11 +151,19 @@ def run(config_path: Path, output_dir: Path) -> dict[str, Any]:
     provenance = {
         "schema_version": "qso-seeker-provenance-run-v1",
         "run_id": run_id,
-        "config_sha256": sha256_text(config_path.read_text(encoding="utf-8")),
+        "config_sha256": sha256_text(config_text),
         "network_used": False,
         "record_hashes": [record["record_sha256"] for record in records],
         "envelope_hashes": [envelope["envelope_sha256"] for envelope in envelopes],
-        "pipeline": ["registry_validation", "mock_retrieval", "sanitization", "canonicalization", "content_addressing", "deduplication", "field_envelope_preparation"],
+        "pipeline": [
+            "registry_validation",
+            "mock_retrieval",
+            "sanitization",
+            "canonicalization",
+            "content_addressing",
+            "deduplication",
+            "field_envelope_preparation",
+        ],
     }
     provenance["provenance_sha256"] = sha256_text(canonical_json(provenance))
     (output_dir / "provenance.json").write_text(json.dumps(provenance, indent=2, sort_keys=True), encoding="utf-8")
