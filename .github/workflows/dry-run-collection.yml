@@ -5,13 +5,19 @@ on:
   pull_request:
     paths:
       - "scripts/dry_run_collection.py"
+      - "scripts/materialize_data_collection_scaffold.py"
       - "configs/sources.dry-run.json"
+      - "roadmap/data-collection-plan.json"
       - ".github/workflows/dry-run-collection.yml"
   schedule:
     - cron: "17 9 * * *"
 
 permissions:
   contents: read
+
+concurrency:
+  group: qso-seeker-dry-run-${{ github.ref }}
+  cancel-in-progress: false
 
 env:
   PYTHONHASHSEED: "0"
@@ -24,14 +30,25 @@ jobs:
       - name: Check out exact submitted revision
         uses: actions/checkout@v4
         with:
+          ref: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.sha }}
           persist-credentials: false
+
+      - name: Assert exact source revision
+        shell: bash
+        env:
+          EXPECTED_HEAD: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.sha }}
+        run: |
+          set -euo pipefail
+          actual_head="$(git rev-parse HEAD)"
+          printf 'expected_head=%s\nactual_head=%s\n' "$EXPECTED_HEAD" "$actual_head"
+          test "$actual_head" = "$EXPECTED_HEAD"
 
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.12"
 
-      - name: Compile dry-run routine
+      - name: Compile dry-run routines
         run: python -m py_compile scripts/dry_run_collection.py scripts/materialize_data_collection_scaffold.py
 
       - name: Validate scaffold plan and dry-run registry
@@ -40,21 +57,28 @@ jobs:
           python -m json.tool roadmap/data-collection-plan.json > /dev/null
           python -m json.tool configs/sources.dry-run.json > /dev/null
 
-      - name: Execute network-disabled collection rehearsal
+      - name: Execute first network-disabled rehearsal
         run: |
-          rm -rf artifacts/dry-run
+          rm -rf artifacts/dry-run-a
           python scripts/dry_run_collection.py \
             --config configs/sources.dry-run.json \
-            --output artifacts/dry-run
+            --output artifacts/dry-run-a
+
+      - name: Execute deterministic replay
+        run: |
+          rm -rf artifacts/dry-run-b
+          python scripts/dry_run_collection.py \
+            --config configs/sources.dry-run.json \
+            --output artifacts/dry-run-b
+          diff -ru artifacts/dry-run-a artifacts/dry-run-b
 
       - name: Verify generated records and provenance
         run: |
           python - <<'PY'
-          import hashlib
           import json
           from pathlib import Path
 
-          root = Path("artifacts/dry-run")
+          root = Path("artifacts/dry-run-a")
           summary = json.loads((root / "summary.json").read_text())
           assert summary["status"] == "pass"
           assert summary["mode"] == "dry-run"
@@ -86,7 +110,8 @@ jobs:
         with:
           name: qso-seeker-dry-run-${{ github.run_id }}
           path: |
-            artifacts/dry-run/
+            artifacts/dry-run-a/
+            artifacts/dry-run-b/
             scaffold-dry-run.txt
           if-no-files-found: error
           retention-days: 14
