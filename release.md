@@ -2,11 +2,11 @@
 
 ## Current Decision
 
-Status: `BLOCKED — ARCHITECT P0 DISPOSITION, SECURITY ISOLATION, AND CONTRACT EVIDENCE REQUIRED`
+Status: `BLOCKED — CURRENT-HEAD P0 DISPOSITION, SECURITY ISOLATION, AND CONTRACT EVIDENCE REQUIRED`
 
-QSO-SEEKER has a defined read-only hostile-input boundary and a bounded P0 candidate in PR #2. Current submitted head `306dfa4104c12594b23dda8111e1c80edb0be397` passed Security Envelope run `29580240905` (#44). The attached run asserted the exact submitted head and passed editable installation, capability-envelope verification, adversarial and deterministic tests, hidden-control scanning, and least-privilege workflow checks. GitHub reports the pull request mergeable, and no unresolved inline review threads are present.
+QSO-SEEKER has a defined read-only hostile-input boundary and a bounded P0 candidate in PR #2. Exact-submitted-head Security Envelope replays have demonstrated reproducible checkout, editable installation, capability-envelope verification, adversarial and deterministic tests, hidden-control scanning, and least-privilege workflow settings. Those results are head-specific provenance only: P0 may move from `REVIEW` to `DONE` only when the then-current PR head has a successful attached full replay and the Architect accepts that exact state.
 
-The prior installation defect was reproduced as setuptools flat-layout auto-discovery of `schemas`, `contracts`, and `unicernal_search`. The candidate limits discovery to `unicernal_search*` and adds regression coverage. This resolves the installation and source-identity defect in the current candidate, but P0 remains `REVIEW` until Architect disposition. Retrieval and sanitization remain only logically separated, the versioned canonical-record and attribution contracts are not accepted, the complete P1-P3 evidence set is absent, successful workflow runs have retained no release artifacts, and no release is eligible.
+The prior installation defect was reproduced as setuptools flat-layout auto-discovery of `schemas`, `contracts`, and `unicernal_search`. The candidate limits discovery to `unicernal_search*` and adds regression coverage. This resolves the installation and source-identity defect in the reviewed candidate line, but retrieval and sanitization remain only logically separated, the versioned canonical-record and attribution contracts are not accepted, the complete P1-P3 evidence set is absent, successful workflow runs have retained no release artifacts, and no release is eligible.
 
 ## Versioning
 
@@ -26,7 +26,7 @@ The prior installation defect was reproduced as setuptools flat-layout auto-disc
 
 ## Selected Candidate Work
 
-PR #2 contains bounded candidate repairs for deterministic whitespace collapse, standards-based TOML dependency parsing, setuptools package discovery, exact submitted-head workflow identity, minimum permissions, tests, and evidence reporting. The current exact-head P0 replay succeeded, but none of this work is accepted release capability until the Architect approves P0 and the later contract and isolation tasks pass.
+PR #2 contains bounded candidate repairs for deterministic whitespace collapse, standards-based TOML dependency parsing, setuptools package discovery, exact submitted-head workflow identity, minimum permissions, tests, and evidence reporting. Previous exact-head P0 replays succeeded, but none of this work is accepted release capability until the current head passes the same replay, the Architect approves P0, and the later contract and isolation tasks pass.
 
 ## Planned Changelog Entries
 
@@ -41,15 +41,15 @@ PR #2 contains bounded candidate repairs for deterministic whitespace collapse, 
 | Gate | Status | Requirement |
 |---|---|---|
 | Task completion | FAIL | P0 is accepted as `DONE`, and P1-P3 are completed with linked commits, commands, workflow runs, and retained artifacts. |
-| P0 tests/CLI/reports | REVIEW | Current head `306dfa4104c12594b23dda8111e1c80edb0be397` passed attached run `29580240905`; Architect acceptance or bounded rework remains required. |
-| Candidate repairs | REVIEW | Installation, dependency parsing, package discovery, exact-source assertion, verifier, tests, and hidden-control scan pass at the exact submitted head; release authority is not implied. |
-| Head stability | PASS | The current PR head has a successful attached exact-head replay. Any later commit resets this gate until the complete replay passes again. |
+| P0 tests/CLI/reports | REVIEW | The current PR head must have a successful attached full Security Envelope replay before Architect acceptance; prior-head passes are provenance only. |
+| Candidate repairs | REVIEW | Installation, dependency parsing, package discovery, exact-source assertion, verifier, tests, and hidden-control scan must pass at the exact accepted head; release authority is not implied. |
+| Head stability | REVIEW | Any commit after a successful run resets exact-head acceptance until the complete replay passes again at the new head. |
 | Contract determinism | INCOMPLETE | Schemas and fixtures must reproduce identical transformations, decisions, rejection reasons, provenance, and hashes across supported environments. |
 | Security isolation | FAIL | Retrieval and sanitizer must be independently permissioned; sanitizer must have no credentials or network and must verify the artifact digest before processing. |
-| Adversarial validation | PARTIAL | P0 adversarial/deterministic tests pass, but the versioned P1/P2 contract and handoff fixture matrix is not complete or accepted. |
-| Workflow integrity | REVIEW | Exact submitted-head checkout/assertion, editable install, minimum permissions, tests, and scans pass; later split-job workflow integrity remains unimplemented. |
+| Adversarial validation | PARTIAL | P0 adversarial/deterministic tests have passed on reviewed heads, but the versioned P1/P2 contract and handoff fixture matrix is not complete or accepted. |
+| Workflow integrity | REVIEW | Exact submitted-head checkout/assertion, editable install, minimum permissions, tests, and scans must pass on the accepted head; later split-job workflow integrity remains unimplemented. |
 | Documentation | PARTIAL | P0 setup and root cause are recorded; supported contract versions, actual isolation, failure recovery, and consumer guidance remain incomplete. |
-| Provenance | PARTIAL | Current exact-head workflow evidence is recorded; the run retained no release artifacts, and release checksums, attestations, complete fixture identities, and rollback drill remain absent. |
+| Provenance | PARTIAL | Prior successful exact-head workflow evidence is recorded; runs retained no release artifacts, and release checksums, attestations, complete fixture identities, and rollback drill remain absent. |
 | Approval | PENDING | Architect P0 disposition followed by explicit release approval after every blocking gate passes. |
 
 ## Artifact Requirements
@@ -67,12 +67,13 @@ Reject or roll back the candidate if Architect review finds an unbounded P0 scop
 
 ## Unresolved Blockers
 
-- Architect must accept, reject, or request bounded rework for P0 at exact replayed head `306dfa4104c12594b23dda8111e1c80edb0be397`.
+- The then-current PR #2 head must pass the complete attached Security Envelope replay before Architect disposition; prior-head passes cannot authorize a changed head.
+- Architect must accept, reject, or request bounded rework for the exact replayed P0 state.
 - P1 versioned canonical-record and attribution-sidecar contracts are incomplete.
 - P2 independently permissioned retrieval/sanitizer separation and digest-verified artifact handoff are incomplete.
 - P3 complete adversarial conformance fixtures and expected outputs are incomplete.
 - Retrieval and sanitization still share a logical/workflow boundary rather than independently permissioned jobs.
-- Successful run `29580240905` retained no release artifacts; complete release artifact, checksum, attestation, and rollback evidence remains absent.
+- Successful runs have retained no release artifacts; complete release artifact, checksum, attestation, and rollback evidence remains absent.
 - Complete contract, isolation, documentation, provenance, and consumer-acceptance evidence remains absent.
 - QuantumStateObjects cannot consume an authoritative canonical-record contract until P1-P3 are published and independently accepted.
 
@@ -81,5 +82,4 @@ Reject or roll back the candidate if Architect review finds an unbounded P0 scop
 - 2026-07-16 — Aligned the candidate with the secure read-only retrieval MVP; release remained blocked by isolation and deterministic contract evidence.
 - 2026-07-17 — Recorded the initial bounded P0 candidate and preserved failed installation/source-identity evidence from runs `29564325393` and `29564563760`.
 - 2026-07-17 — Recorded successful exact-submitted-head P0 replays, including runs `29576874153` and `29579705145`, as provenance for the bounded candidate line.
-- 2026-07-17 — Made acceptance head-stable: any subsequent commit must complete a fresh exact-head replay before Architect disposition.
-- 2026-07-17 — Current head `306dfa4104c12594b23dda8111e1c80edb0be397` passed attached Security Envelope run `29580240905`; PR #2 is mergeable with no unresolved inline review threads. Release remains blocked by Architect disposition, absent retained artifacts, and incomplete P1-P3 contract, isolation, adversarial, provenance, and rollback gates.
+- 2026-07-17 — Made acceptance head-stable: any subsequent commit must complete a fresh exact-head replay before Architect disposition. Release remains blocked by P0 approval, absent retained artifacts, and incomplete P1-P3 contract, isolation, adversarial, provenance, and rollback gates.
