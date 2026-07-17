@@ -1,0 +1,33 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+
+# Generated collection evidence
+artifacts/
+collection-output/
+raw-retrievals/
+
+# Private deployment overlays
+.private-runtime/
+private-config/
+configs/private/
+configs/*.private.json
+configs/*.secret.json
+*.credentials.json
+*.tokens.json
+*.pem
+*.key
+*.p12
+*.pfx
+.env
+.env.*
+!.env.example
+
+# Local databases and indexes
+*.db
+*.sqlite
+*.sqlite3
+indexes/
+content-store/
