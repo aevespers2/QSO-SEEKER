@@ -2,18 +2,19 @@
 
 ## Scope
 
-This report records the bounded QSO-SEEKER P0 baseline for tests, the independent security-envelope verifier, CLI JSON output, PDF evidence generation, Python compilation, packaging installation, and workflow syntax/permission inspection.
+This report records the bounded QSO-SEEKER P0 baseline for tests, the independent security-envelope verifier, CLI JSON output, PDF evidence generation, Python compilation, packaging installation, workflow source identity, and workflow permission inspection.
 
 - Repository: `aevespers2/QSO-SEEKER`
 - Source base: `f9b6d696587450c0e279e81c15011a571b61952e`
 - Candidate branch: `builder/p0-security-cli-baseline-20260717`
 - Initial implementation/test commit: `1c55ee45edbb4fe05c27efcb9c4c6d4e375a9321`
 - Packaging remediation commit: `cfb7a22480b60ba6198a4f7d622c002378e1c061`
-- Initial PR head: `551c4b24831de73d3d4e202bcb08fdaf6d281c66`
+- Exact-source workflow commit: `c7176bb274f7840926738cc3200931cf8eea91d9`
+- Reconciled submitted head: `e5439b0d86abb8b80b31cc14ea8421a11a44bf5b`
 - Pull request: `#2`
-- Environment: Linux x86_64; CPython 3.13.5; pytest 9.0.2; pydantic 2.13.4; PyYAML 6.0.3
-
-Direct GitHub cloning was unavailable in the verification runner because DNS resolution failed. The local replay used exact UTF-8 contents fetched through the GitHub Contents API and a bounded packaging reproducer. This remains candidate evidence until the final submitted head has an attached successful workflow or independently reviewed clean-checkout replay.
+- Successful workflow: Security Envelope run `29576736138` (`#32`)
+- Local environment: Linux x86_64; CPython 3.13.5; pytest 9.0.2; pydantic 2.13.4; PyYAML 6.0.3
+- CI environment: Ubuntu 24.04; Python 3.11; repository permission `contents: read`
 
 ## Baseline findings and bounded repairs
 
@@ -37,7 +38,19 @@ The workflow's `python -m pip install -e . pytest` step failed before any verifi
 error: Multiple top-level packages discovered in a flat-layout: ['schemas', 'contracts', 'unicernal_search'].
 ```
 
-Repair: `[tool.setuptools.packages.find]` now includes only `unicernal_search*`. The added regression test verifies the runtime package matches and that `contracts`, `schemas`, `tests`, and `tools` do not match the discovery scope. Replaying the same editable-install reproducer after the change successfully built and installed `unicernal-search-gateway==0.1.0`.
+Repair: `[tool.setuptools.packages.find]` now includes only `unicernal_search*`. The regression test verifies the runtime package matches and that `contracts`, `schemas`, `tests`, and `tools` do not match the discovery scope. Replaying the same editable-install reproducer after the change successfully built and installed `unicernal-search-gateway==0.1.0`.
+
+### 4. Pull-request source identity
+
+The original workflow allowed `actions/checkout` to select GitHub's synthetic pull-request merge ref, so a run associated with the candidate did not prove the exact submitted source state.
+
+Repair: pull-request runs now check out `github.event.pull_request.head.sha`, keep `persist-credentials: false`, and immediately compare `git rev-parse HEAD` with the expected submitted head. The workflow fails closed on any mismatch.
+
+### 5. Mainline reconciliation
+
+The candidate had diverged from five Architect/Product/Release documentation commits on `main`, causing PR #2 to become non-mergeable and preventing a useful pull-request workflow replay.
+
+Repair: merge commit `e5439b0d86abb8b80b31cc14ea8421a11a44bf5b` reconciled current `main` into the candidate with both histories preserved and no force rewrite. GitHub then reported PR #2 mergeable.
 
 ## Local commands and results
 
@@ -67,18 +80,21 @@ python -m pip install -e . --no-deps  # same reproducer after discovery scope
 PASS — editable wheel built and unicernal-search-gateway 0.1.0 installed
 ```
 
-## Attached GitHub Actions result
+## Exact submitted-head GitHub Actions result
 
-Security Envelope run `29564325393` (run number `24`) was triggered for PR #2 at initial head `551c4b24831de73d3d4e202bcb08fdaf6d281c66`.
+Security Envelope run `29576736138` (run number `32`) completed successfully at submitted head `e5439b0d86abb8b80b31cc14ea8421a11a44bf5b`.
 
-- Checkout: `PASS`
-- Python setup: `PASS`
-- Install minimal test environment: `FAIL`
-- Security verifier, pytest, and hidden-control steps: `SKIPPED` because installation failed
-- Runner: Ubuntu 24.04.4; runner image `ubuntu-24.04` version `20260714.240.1`; Git `2.54.0`
-- Token permission evidence: `Contents: read`, `Metadata: read`
+| Step | Result |
+|---|---|
+| Checkout | PASS |
+| Assert exact source revision | PASS |
+| Python 3.11 setup | PASS |
+| Install minimal test environment | PASS |
+| Verify capability envelope | PASS |
+| Run adversarial and deterministic tests | PASS |
+| Verify no hidden control characters | PASS |
 
-The package-discovery failure is now reproducible and remediated in the candidate. A successful workflow attached to the final submitted head is still required before P0 can move out of `IN PROGRESS`.
+The workflow retained `contents: read` permission and disabled checkout credential persistence. The exact-source assertion establishes that verification ran against the submitted candidate head rather than a synthetic merge ref.
 
 ## CLI fixture result
 
@@ -110,7 +126,7 @@ Candidate source SHA-256 values:
 
 ## Residual gates
 
-- Obtain a successful complete Security Envelope workflow run attached to the final submitted head.
-- Retain exact submitted-head or independently reviewed clean-checkout evidence rather than relying only on a generated PR merge ref or bounded mirror.
+- Architect review/disposition is required before P0 becomes `DONE` or P1/P2 are treated as accepted work.
+- The final documentation-only status commit must retain an attached successful exact-head workflow run; record that run on PR #2 without moving the head again.
 - P1 contract publication and P2 independently permissioned retrieval/sanitizer jobs remain separate follow-on tasks.
 - This task adds no network, credential, execution, repository-write, or autonomous decision authority.
