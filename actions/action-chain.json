@@ -1,0 +1,59 @@
+{
+  "protocol": "QSO-SEEKER-ACTION-PROTOCOL-v1",
+  "notification_policy": {
+    "notify_only": [
+      "completed",
+      "blocked",
+      "decision_required"
+    ]
+  },
+  "execution_policy": {
+    "claim": "highest-priority-unblocked",
+    "implementation_steps": 1,
+    "max_files": 4,
+    "require_exact_head": true,
+    "require_completion_evidence": true,
+    "fail_closed": true
+  },
+  "actions": [
+    {
+      "id": "P0-ARCHITECT-DISPOSITION",
+      "priority": 0,
+      "owner": "Architect",
+      "state": "REVIEW",
+      "depends_on": [],
+      "description": "Accept, reject, or request bounded rework for the exact-head P0 baseline."
+    },
+    {
+      "id": "P1-CANONICAL-CONTRACT",
+      "priority": 1,
+      "owner": "QSOBuilder",
+      "state": "PROPOSED",
+      "depends_on": [
+        "P0-ARCHITECT-DISPOSITION"
+      ],
+      "description": "Publish versioned canonical-record and attribution-sidecar fixtures with deterministic hashes."
+    },
+    {
+      "id": "P2-ISOLATED-HANDOFF",
+      "priority": 2,
+      "owner": "QSOBuilder",
+      "state": "PROPOSED",
+      "depends_on": [
+        "P0-ARCHITECT-DISPOSITION"
+      ],
+      "description": "Split retrieval and sanitization into independently permissioned jobs with digest-verified artifact handoff."
+    },
+    {
+      "id": "P3-ADVERSARIAL-CONFORMANCE",
+      "priority": 3,
+      "owner": "Builder",
+      "state": "PROPOSED",
+      "depends_on": [
+        "P1-CANONICAL-CONTRACT",
+        "P2-ISOLATED-HANDOFF"
+      ],
+      "description": "Publish deterministic adversarial conformance fixtures and expected outputs."
+    }
+  ]
+}
