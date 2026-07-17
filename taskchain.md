@@ -20,7 +20,7 @@ States: `PROPOSED` · `READY` · `IN PROGRESS` · `BLOCKED` · `REVIEW` · `DONE
 
 | Priority | Task | Owner | Depends on | Status | Acceptance criteria |
 |---|---|---|---|---|---|
-| P0 | Establish a reproducible security and CLI baseline | QSOBuilder | — | READY | Full pytest, security-envelope, CLI JSON, PDF report, and workflow checks pass or failures have retained reproducers; no fetched content executes. |
+| P0 | Establish a reproducible security and CLI baseline | QSOBuilder | — | REVIEW | Full pytest, security-envelope, CLI JSON, PDF report, and workflow checks pass or failures have retained reproducers; no fetched content executes. Candidate evidence is recorded at `reports/p0-security-cli-baseline-20260717.md`; exact-head CI or independent clean-checkout acceptance remains open. |
 | P1 | Version the canonical record and attribution-sidecar contract | QSOBuilder | P0 | PROPOSED | Schemas and fixtures define fields, transformations, limits, rejection reasons, provenance, hashes, and independent consumer validation. |
 | P2 | Split retrieval and sanitizer into independently permissioned jobs | QSOBuilder | P0 | PROPOSED | Fetch is read-only; sanitizer receives a verified inert artifact, has no network/repository credential, and fails closed on missing or changed digest. |
 | P3 | Publish adversarial conformance fixtures | Builder | P1 and P2 | PROPOSED | Hostile and malformed inputs produce deterministic accepted/rejected outputs without execution or provenance loss. |
@@ -32,3 +32,5 @@ Until P2 is complete, retrieval and sanitization are only logically separated. D
 ## Builder Log
 
 Record commits, workflow runs, exact test commands/results, fixture and artifact hashes, permission evidence, rejected samples, residual risks, and follow-ups.
+
+- 2026-07-17 — Claimed P0 on `builder/p0-security-cli-baseline-20260717` from source base `f9b6d696587450c0e279e81c15011a571b61952e`. Corrected deterministic whitespace collapse and the security verifier's one-line dependency parsing; added focused dependency-envelope tests. Candidate implementation/test commit `1c55ee45edbb4fe05c27efcb9c4c6d4e375a9321` passed the security verifier, 11 pytest tests, Python compilation, CLI JSON/PDF integrity replay, workflow YAML/permission inspection, and the hidden-control scan under CPython 3.13.5. Full evidence and hashes are in `reports/p0-security-cli-baseline-20260717.md`. P0 moved to `REVIEW`; exact-head GitHub Actions or independent clean-checkout evidence remains required before `DONE`.
