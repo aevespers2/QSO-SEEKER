@@ -178,7 +178,6 @@ def run(config_path: Path, output_dir: Path) -> dict[str, Any]:
         "field_envelope_count": len(envelopes),
         "unique_content_count": len(deduplicated),
         "provenance_sha256": provenance["provenance_sha256"],
-        "output_dir": str(output_dir),
     }
     (output_dir / "summary.json").write_text(json.dumps(summary, indent=2, sort_keys=True), encoding="utf-8")
     return summary
