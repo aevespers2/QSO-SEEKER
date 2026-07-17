@@ -8,9 +8,11 @@ This report records the bounded QSO-SEEKER P0 baseline for tests, the independen
 - Source base: `f9b6d696587450c0e279e81c15011a571b61952e`
 - Candidate branch: `builder/p0-security-cli-baseline-20260717`
 - Implementation/test commit: `1c55ee45edbb4fe05c27efcb9c4c6d4e375a9321`
+- Initial PR head: `551c4b24831de73d3d4e202bcb08fdaf6d281c66`
+- Pull request: `#2`
 - Environment: Linux x86_64; CPython 3.13.5; pytest 9.0.2; pydantic 2.13.4; PyYAML 6.0.3
 
-Direct GitHub cloning was unavailable in the verification runner because DNS resolution failed. The replay used a local mirror assembled from the exact UTF-8 contents fetched from the source base and candidate branch through the GitHub Contents API. This is candidate evidence, not an independent clean-checkout or attached GitHub Actions acceptance run.
+Direct GitHub cloning was unavailable in the verification runner because DNS resolution failed. The local replay used a mirror assembled from the exact UTF-8 contents fetched from the source base and candidate branch through the GitHub Contents API. This remains candidate evidence rather than an independent clean-checkout acceptance replay.
 
 ## Baseline findings and bounded repairs
 
@@ -26,7 +28,7 @@ The verifier parsed the dependency list with string slicing and line splitting. 
 
 Repair: the verifier now uses Python's standard-library `tomllib`, and two focused tests cover the one-line approved dependency and an unapproved `requests>=2` dependency.
 
-## Commands and results
+## Local commands and results
 
 ```text
 python tools/verify_security_envelope.py
@@ -47,6 +49,19 @@ PASS — both workflows parsed; each has a jobs map and top-level contents: read
 Tracked-text hidden-control scan using the workflow's forbidden-code-point set
 PASS — no forbidden hidden controls in the mirrored tracked text
 ```
+
+## Attached GitHub Actions result
+
+Security Envelope run `29564325393` (run number `24`) was triggered for PR #2 at initial head `551c4b24831de73d3d4e202bcb08fdaf6d281c66`.
+
+- Checkout: `PASS`
+- Python setup: `PASS`
+- Install minimal test environment: `FAIL`
+- Security verifier, pytest, and hidden-control steps: `SKIPPED` because installation failed
+- Runner: Ubuntu 24.04.4; runner image `ubuntu-24.04` version `20260714.240.1`; Git `2.54.0`
+- Token permission evidence: `Contents: read`, `Metadata: read`
+
+The workflow logs retain the failed installation attempt, but the available job summary does not yet establish the root cause. P0 therefore remains in progress rather than accepted.
 
 ## CLI fixture result
 
@@ -76,7 +91,7 @@ Candidate source SHA-256 values:
 
 ## Residual gates
 
-- No GitHub Actions workflow run or commit-status check was attached to the observed source base when this task began.
-- The candidate branch still requires exact-head GitHub Actions or an independent clean-checkout replay with retained logs.
+- Diagnose and correct the GitHub Actions installation failure, then rerun the complete workflow at the submitted head.
+- Retain an exact submitted-head or independently reviewed clean-checkout replay rather than relying only on a generated PR merge ref.
 - P1 contract publication and P2 independently permissioned retrieval/sanitizer jobs remain separate follow-on tasks.
 - This task adds no network, credential, execution, repository-write, or autonomous decision authority.
