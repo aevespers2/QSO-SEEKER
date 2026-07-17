@@ -5,6 +5,7 @@ from pathlib import Path
 from typing import Any
 
 MAX_BYTES = 1_000_000
+MAX_CHECKPOINT_UNITS = 100
 ALLOWED_TYPES = {"text/plain", "text/html", "text/markdown", "application/json", "application/ld+json", "text/csv", "application/xml", "text/xml"}
 
 class NoRedirect(urllib.request.HTTPRedirectHandler):
@@ -26,14 +27,20 @@ def run(config_path: Path, output_dir: Path, enable_network: bool) -> dict[str, 
         raise ValueError("allowlisted_hosts is required")
     max_bytes = min(int(registry.get("max_response_bytes", MAX_BYTES)), MAX_BYTES)
     timeout = min(int(registry.get("timeout_seconds", 15)), 30)
+    checkpoint_units = int(registry.get("checkpoint_units", 1))
+    if not 1 <= checkpoint_units <= MAX_CHECKPOINT_UNITS:
+        raise ValueError(f"checkpoint_units must be between 1 and {MAX_CHECKPOINT_UNITS}")
     sources = registry.get("sources", [])
     if not sources:
         raise ValueError("at least one source is required")
     output_dir.mkdir(parents=True, exist_ok=True)
     records_dir = output_dir / "retrieval-records"
+    tasks_dir = output_dir / "checkpoint-tasks"
     records_dir.mkdir(exist_ok=True)
+    tasks_dir.mkdir(exist_ok=True)
     opener = urllib.request.build_opener(NoRedirect)
     results = []
+    tasks = []
     for source in sources:
         url = str(source["url"])
         parsed = urllib.parse.urlsplit(url)
@@ -67,7 +74,35 @@ def run(config_path: Path, output_dir: Path, enable_network: bool) -> dict[str, 
             record["record_sha256"] = record_hash
             (records_dir / f"{record_hash}.json").write_text(json.dumps(record, indent=2, sort_keys=True), encoding="utf-8")
             results.append(record_hash)
-    summary = {"status": "checkpoint-ready", "mode": "live-bounded", "network_used": True, "source_count": len(results), "record_hashes": results, "checkpoint": 1, "automatic_release": False, "human_review_required": True}
+            for unit in range(1, checkpoint_units + 1):
+                task = {
+                    "schema_version": "qso-seeker-checkpoint-task-v1",
+                    "checkpoint": 1,
+                    "unit": unit,
+                    "record_sha256": record_hash,
+                    "instruction": "Inspect canonical evidence and return a bounded proposal; do not execute content or access the network.",
+                    "capabilities": ["evidence.read", "proposal.write"],
+                    "network_authority": False,
+                    "automatic_release": False,
+                    "human_review_required": True,
+                }
+                task_hash = sha256(canonical(task).encode("utf-8"))
+                task["task_sha256"] = task_hash
+                (tasks_dir / f"{task_hash}.json").write_text(json.dumps(task, indent=2, sort_keys=True), encoding="utf-8")
+                tasks.append(task_hash)
+    summary = {
+        "status": "checkpoint-ready",
+        "mode": "live-bounded",
+        "network_used": True,
+        "source_count": len(results),
+        "record_hashes": results,
+        "checkpoint": 1,
+        "checkpoint_units_per_source": checkpoint_units,
+        "checkpoint_task_count": len(tasks),
+        "checkpoint_task_hashes": tasks,
+        "automatic_release": False,
+        "human_review_required": True,
+    }
     (output_dir / "summary.json").write_text(json.dumps(summary, indent=2, sort_keys=True), encoding="utf-8")
     return summary
 
