@@ -2,9 +2,9 @@
 
 ## Repository role
 
-Read-only retrieval boundary, hostile-input sanitization, canonical-record production, attribution sidecars, and evidence reports for QSO experiments.
+Read-only retrieval boundary, hostile-input sanitization, canonical-record production, attribution sidecars, evidence reports, and deterministic action governance for QSO experiments.
 
-States: `PROPOSED` · `READY` · `IN PROGRESS` · `BLOCKED` · `REVIEW` · `DONE`
+States: `PROPOSED` · `READY` · `IN_PROGRESS` · `BLOCKED` · `REVIEW` · `DONE`
 
 ## Product directive
 
@@ -14,7 +14,13 @@ States: `PROPOSED` · `READY` · `IN PROGRESS` · `BLOCKED` · `REVIEW` · `DONE
 - **Priority:** Security isolation and deterministic contract publication precede broader source coverage or integration with the QSO runtime.
 - **Success criteria:** full checks pass at one immutable commit; accepted/rejected outputs and hashes are repeatable; sanitizer job is credential-free and network-free; missing or changed digests fail closed; no fetched material is executed; documentation describes actual rather than implied isolation.
 - **Non-goals:** general web crawling, authenticated/private-source acquisition, autonomous learning, executable artifact processing, browser automation, or runtime decision authority.
-- **Release rationale:** QSO-SEEKER is the hostile-input boundary for the portfolio. Its contract must be independently trustworthy before retrieved material can enter experiments.
+- **Release rationale:** QSO-SEEKER is the hostile-input boundary for the portfolio. Its contract and action system must be independently trustworthy before retrieved material can enter experiments.
+
+## Action protocol v1
+
+`actions/action-chain.json` is the machine-readable queue governed by `QSO-SEEKER-ACTION-PROTOCOL-v1`. The planner selects only a `READY` Builder-owned action whose dependencies are all `DONE`, orders candidates by numeric priority and action ID, and emits a claim bound to the canonical chain digest, exact 40-character head SHA, actor, one implementation step, and a bounded file count.
+
+Progress fails closed when a task exceeds its budget, claims completion without evidence, reports a blocker without a blocker record, or requests a decision without a decision record. Notification output is suppressed for ordinary `in_progress` state and is eligible only for `completed`, `blocked`, or `decision_required`. The five-past-hour workflow is read-only, asserts exact source identity, tests the protocol, produces deterministic claim evidence, and retains that evidence for 30 days.
 
 ## Active chain
 
@@ -37,7 +43,7 @@ Security Envelope run `29576736138` passed at submitted remediation/merge head `
 
 ## Architectural boundary
 
-Until P2 is complete, retrieval and sanitization are only logically separated. Documentation must not call the current single-job workflow process, container, or microVM isolation.
+Until P2 is complete, retrieval and sanitization are only logically separated. Documentation must not call the current single-job workflow process, container, or microVM isolation. The action planner is a deterministic selection and evidence mechanism, not autonomous implementation authority and not a repository-write agent.
 
 ## Builder Log
 
@@ -49,3 +55,4 @@ Record commits, workflow runs, exact test commands/results, fixture and artifact
 - 2026-07-17 — Commit `c7176bb274f7840926738cc3200931cf8eea91d9` configures the Security Envelope workflow to check out and assert the exact submitted pull-request head before installation.
 - 2026-07-17 — Merge commit `e5439b0d86abb8b80b31cc14ea8421a11a44bf5b` reconciled current `main` into PR #2 without rewriting reviewed history and restored mergeability.
 - 2026-07-17 — Security Envelope run `29576736138` passed at exact submitted head `e5439b0d86abb8b80b31cc14ea8421a11a44bf5b`; every substantive workflow step passed. P0 moved to `REVIEW` for Architect disposition.
+- 2026-07-17 — Added `QSO-SEEKER-ACTION-PROTOCOL-v1`, deterministic claim generation, bounded progress validation, notification gating, six focused tests, a canonical JSON action chain, and a read-only five-past-hour workflow with retained claim evidence. This redesign codifies the lessons from repeated stale-head, missing-evidence, premature-status, dependency, and notification failures without granting repository-write or autonomous execution authority.
