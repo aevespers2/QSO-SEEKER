@@ -20,20 +20,22 @@ States: `PROPOSED` · `READY` · `IN PROGRESS` · `BLOCKED` · `REVIEW` · `DONE
 
 | Priority | Task | Owner | Depends on | Status | Acceptance criteria |
 |---|---|---|---|---|---|
-| P0 | Establish a reproducible security and CLI baseline | QSOBuilder | — | IN PROGRESS | Full pytest, security-envelope, CLI JSON, PDF report, and workflow checks pass or failures have retained reproducers; no fetched content executes. |
+| P0 | Establish a reproducible security and CLI baseline | QSOBuilder | — | REVIEW | Full pytest, security-envelope, CLI JSON, PDF report, workflow, exact-source, and hidden-control checks pass at one submitted immutable head with retained evidence; Architect accepts, rejects, or requests bounded rework; no fetched content executes. |
 | P1 | Version the canonical record and attribution-sidecar contract | QSOBuilder | P0 | PROPOSED | Schemas and fixtures define fields, transformations, limits, rejection reasons, provenance, hashes, and independent consumer validation. |
 | P2 | Split retrieval and sanitizer into independently permissioned jobs | QSOBuilder | P0 | PROPOSED | Fetch is read-only; sanitizer receives a verified inert artifact, has no network/repository credential, and fails closed on missing or changed digest. |
 | P3 | Publish adversarial conformance fixtures | Builder | P1 and P2 | PROPOSED | Hostile and malformed inputs produce deterministic accepted/rejected outputs without execution or provenance loss. |
 
 ## P0 baseline candidate — PR #2
 
-**Status:** `REVIEW — INSTALLATION AND SOURCE-IDENTITY FAILURE BLOCK ACCEPTANCE`
+**Status:** `REVIEW — EXACT-HEAD BASELINE PASSED; ARCHITECT DISPOSITION REQUIRED`
 
-PR #2 remains the single bounded P0 candidate at head `9e2d83e4156b77e177a4e478de3d46271174f77a`. It records local candidate evidence from implementation/test commit `1c55ee45edbb4fe05c27efcb9c4c6d4e375a9321`: the security-envelope verifier, 11 pytest tests, Python compilation, CLI JSON/audit/evidence/PDF replay, workflow YAML and read-only permission inspection, and the tracked-text hidden-control scan passed in the documented local environment. The candidate also repairs deterministic whitespace collapse and replaces fragile dependency-string parsing with standard-library `tomllib` plus focused tests.
+PR #2 remains the single bounded P0 candidate at submitted head `75e9ebd578898bfba47f24d9619535ba025bc921`. Security Envelope run `29576874153` (#33) completed successfully after checking out and asserting that exact submitted head. Editable installation, capability-envelope verification, adversarial and deterministic tests, and the hidden-control scan passed. GitHub reports the pull request mergeable.
 
-Security Envelope run `29564563760` is associated with the current PR head but checked out pull-request merge ref `58084e0978bb30970a6cd2e919c96819622ecdf8`, not the submitted head itself. The run failed at `Install minimal test environment`; the capability verifier, adversarial/deterministic tests, and hidden-control scan were skipped, and no successful artifact bundle was retained. GitHub reports PR #2 non-mergeable. The earlier local Contents-API replay remains useful candidate evidence but does not replace a successful exact submitted-head or independently reviewed clean-checkout replay.
+The prior installation failure was reproduced as setuptools flat-layout auto-discovery of `schemas`, `contracts`, and `unicernal_search`. The candidate repair limits package discovery to `unicernal_search*`, preserves the deterministic whitespace and standards-based `tomllib` dependency-envelope corrections, and adds focused packaging-discovery and dependency regression tests. The candidate workflow retains `contents: read` and disables checkout credential persistence.
 
-**Directive:** preserve PR #2 as the single P0 path; diagnose the installation failure from the retained job logs; make only the bounded dependency/build/workflow correction required; configure CI to check out and assert the exact submitted head rather than a synthetic merge ref; rerun the complete suite with retained logs and artifacts; and keep P1/P2 work from being treated as accepted until P0 is independently reproducible. Product scope and portfolio priority are unchanged.
+This closes the installation and source-identity blocker for the candidate, but it does not itself accept P0 or authorize release. The Architect must review the retained exact-head evidence and candidate scope, then accept, reject, or request bounded rework. P1, P2, and P3 remain unaccepted; retrieval and sanitization remain only logically separated until P2 is completed.
+
+**Directive:** hold further branch expansion unless review identifies a bounded P0 defect. If the Architect accepts the candidate, mark P0 `DONE` and decompose P1 and P2 without representing either contract publication or security isolation as implemented. Do not broaden source coverage or begin runtime integration. Product scope and portfolio priority are unchanged.
 
 ## Architectural boundary
 
@@ -43,5 +45,6 @@ Until P2 is complete, retrieval and sanitization are only logically separated. D
 
 Record commits, workflow runs, exact test commands/results, fixture and artifact hashes, permission evidence, rejected samples, residual risks, and follow-ups.
 
-- 2026-07-17 — Reviewed PR #2 at head `9e2d83e4156b77e177a4e478de3d46271174f77a`. Local candidate checks and recorded artifact hashes narrow P0, but the initial Security Envelope run failed during environment installation before the verifier or tests executed. P0 advanced to `IN PROGRESS`; priority remained unchanged.
-- 2026-07-17 — Confirmed current-head-associated run `29564563760` also failed during environment installation after checking out PR merge ref `58084e0978bb30970a6cd2e919c96819622ecdf8`. All substantive checks were skipped, PR #2 is non-mergeable, and no exact submitted-head or independent clean-checkout acceptance exists. The next action is a bounded install/checkout repair and complete replay, not P1/P2 expansion.
+- 2026-07-17 — Reviewed PR #2 at head `9e2d83e4156b77e177a4e478de3d46271174f77a`. Local candidate checks and recorded artifact hashes narrowed P0, but the initial Security Envelope run failed during environment installation before the verifier or tests executed. P0 advanced to `IN PROGRESS`; priority remained unchanged.
+- 2026-07-17 — Confirmed current-head-associated run `29564563760` also failed during environment installation after checking out PR merge ref `58084e0978bb30970a6cd2e919c96819622ecdf8`. All substantive checks were skipped, PR #2 was non-mergeable, and no exact submitted-head or independent clean-checkout acceptance existed. The next action remained a bounded install/checkout repair and complete replay, not P1/P2 expansion.
+- 2026-07-17 — Re-reviewed final submitted head `75e9ebd578898bfba47f24d9619535ba025bc921`. Security Envelope run `29576874153` succeeded with exact-source assertion, editable installation, capability verification, adversarial/deterministic tests, and hidden-control scanning, and GitHub reports the PR mergeable. P0 advanced to `REVIEW` pending Architect disposition; release and the P1-P3 capability claims remain blocked.
