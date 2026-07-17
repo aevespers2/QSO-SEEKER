@@ -1,0 +1,56 @@
+{
+  "schema_version": "qso-academic-contribution-v1",
+  "bundle_id": "replace-with-stable-bundle-id",
+  "contribution_class": "replication_report",
+  "title": "Replace with contribution title",
+  "abstract": "Summarize what was collected, tested, observed, or replicated.",
+  "contributors": [
+    {
+      "contributor_id": "replace-with-local-or-public-id",
+      "name": "",
+      "orcid": "",
+      "institution": "",
+      "contact": ""
+    }
+  ],
+  "software": {
+    "repository": "https://github.com/aevespers2/QSO-SEEKER",
+    "commit_sha": "0000000000000000000000000000000000000000",
+    "configuration_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+    "runtime": "Python 3.12"
+  },
+  "methods": [
+    "Describe the collection protocol, adapter, sanitization stages, analysis, and review process."
+  ],
+  "evidence": [
+    {
+      "evidence_type": "replication-summary",
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "locator": "",
+      "redistributable": true,
+      "citation": "",
+      "license": ""
+    }
+  ],
+  "findings": [
+    "State the principal evidence-backed result."
+  ],
+  "limitations": [
+    "State sampling, source, method, licensing, uncertainty, and generalization limits."
+  ],
+  "contradictions": [],
+  "licenses": {
+    "report_license": "CC-BY-4.0",
+    "data_license": "Specify license or NO-DATA-INCLUDED",
+    "code_license": "Specify license or NOT-APPLICABLE"
+  },
+  "privacy_declaration": {
+    "contains_credentials": false,
+    "contains_private_locators": false,
+    "contains_personal_data": false,
+    "personal_data_authorized": false,
+    "reviewed_for_disclosure": true
+  },
+  "human_approved": true,
+  "bundle_sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+}
