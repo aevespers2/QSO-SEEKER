@@ -1,0 +1,153 @@
+QSO ECOSYSTEM SOURCE LICENSE
+Version 1.0 — Draft for Legal Review
+
+Copyright (c) 2026 Jacob Thomas Redmond and contributors.
+All rights reserved except as expressly granted below.
+
+IMPORTANT: This is a source-available license, not an Open Source Initiative-approved open-source license. Commercial use is restricted. This draft should be reviewed by qualified counsel before a production release.
+
+1. DEFINITIONS
+
+“Software” means the source code, object code, schemas, workflows, adapters, documentation, prompts, tests, examples, and other materials distributed with this license.
+
+“Licensor” means the copyright holder identified above and any successor or expressly appointed ecosystem steward.
+
+“Ecosystem” means the QSO, QSO-SEEKER, QSO-FABRIC, QSO-DIGITALIS, QuantumStateObjects, related repositories, shared research infrastructure, community-governed services, and authorized successor projects designated by the Licensor.
+
+“Noncommercial Use” means use that is not primarily intended for or directed toward commercial advantage or monetary compensation.
+
+“Ecosystem Commercial Use” means revenue-generating activity expressly authorized in writing by the Licensor under an agreement that specifies how revenue, equity, fees, data, infrastructure, or another measurable benefit will be returned to the Ecosystem.
+
+“Commercial Entity” means any for-profit company, partnership, venture-backed organization, commercial laboratory, or person acting primarily for commercial advantage.
+
+2. PERMITTED USES
+
+Subject to this license, you may:
+
+(a) view, study, inspect, audit, and evaluate the Software;
+
+(b) copy and modify the Software for personal, educational, academic, charitable, public-interest, or other Noncommercial Use;
+
+(c) run the Software to conduct research, collect authorized data, reproduce experiments, create noncommercial derivative works, and submit sanitized academic contribution bundles to the Ecosystem;
+
+(d) redistribute unmodified or modified source copies for Noncommercial Use, provided that you include this license, preserve attribution and notices, identify material modifications, and do not impose terms that conflict with this license;
+
+(e) create and operate projects inside the Ecosystem that may generate funds solely when the activity qualifies as Ecosystem Commercial Use under a separate written authorization.
+
+3. PROHIBITED COMMERCIAL USE
+
+Unless the Licensor gives prior written authorization, you may not, directly or indirectly:
+
+(a) sell, license, sublicense, rent, lease, or otherwise commercially distribute the Software or a derivative work;
+
+(b) package, bundle, embed, incorporate, or resell the Software or a substantial portion of it as part of a commercial product, platform, appliance, service, subscription, consultancy, or managed offering;
+
+(c) offer the Software or a derivative work as software-as-a-service, platform-as-a-service, hosted API, paid data service, commercial research service, or other monetized remote functionality;
+
+(d) use the Software internally to develop, improve, operate, secure, analyze, or support a commercial product or paid service;
+
+(e) use the Software to reduce commercial development costs, obtain competitive advantage, generate proprietary intellectual property, or support revenue-producing operations;
+
+(f) remove the Software from the Ecosystem, rebrand it, and market it as your own product or technology;
+
+(g) use the Software, its outputs, contributed datasets, prompts, schemas, documentation, or derived corpora to train, fine-tune, distill, benchmark for commercial deployment, or otherwise improve a proprietary or monetized artificial-intelligence or machine-learning system;
+
+(h) sell or commercially license data, canonical records, evidence bundles, indexes, embeddings, models, insights, reports, or other outputs produced substantially through use of the Software;
+
+(i) use trademarks, project names, logos, contributor identities, or ecosystem reputation to imply endorsement, partnership, certification, or authorization.
+
+4. ECOSYSTEM COMMERCIAL AUTHORIZATION
+
+Commercial activity is permitted only through a separate written agreement signed or cryptographically approved by the Licensor or an expressly appointed ecosystem steward.
+
+That agreement must identify:
+
+(a) the authorized activity and scope;
+
+(b) the repositories, components, data, and outputs covered;
+
+(c) the duration and territory of authorization;
+
+(d) the revenue-sharing, equity-sharing, fee, infrastructure, data-contribution, or other benefit returned to the Ecosystem;
+
+(e) transparency, accounting, audit, attribution, privacy, and termination obligations; and
+
+(f) whether derivative works must be contributed back to the Ecosystem.
+
+No course of dealing, public availability, accepted pull request, issue discussion, contribution, silence, or failure to enforce constitutes commercial authorization.
+
+5. ACADEMIC AND COMMUNITY REPORTING
+
+Independent users may publish academic papers, replication reports, negative results, aggregate findings, and sanitized contribution bundles produced through permitted Noncommercial Use, provided that they:
+
+(a) cite the Software and relevant contributors;
+
+(b) preserve provenance and disclose material methods and modifications;
+
+(c) respect source-data licenses, privacy, confidentiality, and research-ethics obligations;
+
+(d) do not disclose credentials, restricted source locators, or unauthorized personal data; and
+
+(e) do not sell access to the Software, contributed data, or substantially derived outputs.
+
+Publication by a commercial publisher, conference, or journal does not by itself make an author's academic use commercial, provided the author is not selling or licensing the Software or its outputs and retains no commercial deployment arrangement.
+
+6. CONTRIBUTIONS
+
+Unless a separate contributor agreement states otherwise, each contribution intentionally submitted to the project is licensed to the Licensor and recipients under this same license. The contributor represents that they have the right to submit the contribution and that it does not knowingly include confidential information, credentials, unlawfully obtained data, or material governed by incompatible terms.
+
+Contributors retain copyright in their contributions. Submission does not grant any contributor the right to commercially exploit the combined Software outside an authorized Ecosystem Commercial Use agreement.
+
+7. DATA AND THIRD-PARTY MATERIAL
+
+This license governs the Software only. Third-party data, publications, APIs, models, and other materials remain governed by their respective terms.
+
+A contributor may attach additional restrictions or permissions to a distinct dataset or report only when those terms are clearly identified and do not purport to relicense the Software.
+
+No license is granted to collect, retain, disclose, or process data unlawfully or contrary to contract, privacy, confidentiality, research-ethics, or intellectual-property obligations.
+
+8. PATENTS
+
+Each contributor grants recipients a nonexclusive, worldwide, royalty-free patent license to make, use, and modify their contribution solely for uses permitted by this license. This patent license terminates for any party that asserts a patent claim alleging that the Software or a contribution infringes a patent.
+
+No patent license is granted for prohibited commercial use.
+
+9. ATTRIBUTION AND NOTICES
+
+Redistributions and public reports must retain this license, copyright notices, attribution files, provenance identifiers, and a prominent statement that the project is source-available and commercially restricted.
+
+Modified versions must state that they are modified and must not imply official status or endorsement.
+
+10. COMPLIANCE INFORMATION
+
+On reasonable written request concerning suspected commercial use, a recipient must provide sufficient information to determine compliance, including the nature of deployment, products or services involved, customers served, and revenue relationship. This obligation does not require disclosure of privileged information or unrelated trade secrets.
+
+11. TERMINATION
+
+Your rights terminate automatically if you violate this license. If the violation is curable and you fully cure it within 30 days after receiving written notice, the Licensor may reinstate your rights in writing.
+
+Rights do not automatically reinstate for intentional resale, proprietary incorporation, concealed commercial deployment, credential misuse, unauthorized personal-data disclosure, or prohibited AI/model training.
+
+Upon termination, you must stop using and distributing the Software and delete commercial deployments and unauthorized copies, except for archival copies required by law.
+
+12. NO TRADEMARK LICENSE
+
+No trademark, service mark, trade name, logo, or right of endorsement is licensed except as necessary for truthful attribution.
+
+13. DISCLAIMER OF WARRANTY
+
+THE SOFTWARE IS PROVIDED “AS IS,” WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, TITLE, NON-INFRINGEMENT, ACCURACY, SECURITY, OR FITNESS OF COLLECTED DATA OR RESEARCH RESULTS.
+
+14. LIMITATION OF LIABILITY
+
+TO THE MAXIMUM EXTENT PERMITTED BY LAW, THE LICENSOR AND CONTRIBUTORS WILL NOT BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, EXEMPLARY, OR PUNITIVE DAMAGES, OR FOR LOSS OF DATA, PROFITS, REVENUE, GOODWILL, OR BUSINESS INTERRUPTION, ARISING FROM THE SOFTWARE OR THIS LICENSE.
+
+15. GOVERNING TERMS
+
+If any provision is unenforceable, it will be modified only to the minimum extent necessary, and the remaining provisions remain effective.
+
+No waiver is effective unless written. This license does not limit rights that cannot lawfully be restricted, including applicable fair-use or fair-dealing rights.
+
+16. COMMERCIAL LICENSING CONTACT
+
+Requests for Ecosystem Commercial Use must be submitted through the official repository process or another contact method designated by the Licensor. No commercial permission exists until a separate written agreement is fully executed.
