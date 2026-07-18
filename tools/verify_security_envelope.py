@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import ast
 import json
+import tomllib
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -39,12 +40,11 @@ def scan_file(path: Path) -> list[str]:
 
 
 def verify_dependencies() -> list[str]:
-    text = (ROOT / "pyproject.toml").read_text(encoding="utf-8")
-    start = text.find("dependencies = [")
-    end = text.find("]", start)
-    if start == -1 or end == -1:
-        return ["pyproject.toml: dependencies list missing"]
-    declared = {line.strip().strip(",").strip('"').strip("'") for line in text[start:end].splitlines()[1:] if line.strip() and not line.strip().startswith("#")}
+    document = tomllib.loads((ROOT / "pyproject.toml").read_text(encoding="utf-8"))
+    declared_raw = document.get("project", {}).get("dependencies")
+    if not isinstance(declared_raw, list) or any(not isinstance(item, str) for item in declared_raw):
+        return ["pyproject.toml: project.dependencies must be an array of strings"]
+    declared = set(declared_raw)
     findings: list[str] = []
     if declared - ALLOWED_DEPENDENCIES:
         findings.append(f"pyproject.toml: unexpected dependencies: {sorted(declared - ALLOWED_DEPENDENCIES)}")
