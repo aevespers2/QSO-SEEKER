@@ -16,7 +16,18 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
           persist-credentials: false
+
+      - name: Assert exact submitted head
+        shell: bash
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: |
+          set -euo pipefail
+          actual="$(git rev-parse HEAD)"
+          test "$actual" = "$EXPECTED_SHA"
+          printf 'Verified exact head: %s\n' "$actual"
 
       - uses: actions/setup-python@v5
         with:
@@ -27,6 +38,7 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           python -m pip install -e . pytest
+          python -c "import unicernal_search, experimental.qso_spawn"
 
       - name: Verify capability envelope
         env:
