@@ -2,13 +2,22 @@ from __future__ import annotations
 
 import ast
 import json
+import tomllib
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-SCAN_DIRS = [ROOT / "unicernal_search", ROOT / "tools"]
+SCAN_DIRS = [ROOT / "unicernal_search", ROOT / "experimental" / "qso_spawn", ROOT / "tools"]
 FORBIDDEN_CALLS = {"eval", "exec", "compile", "__import__"}
 FORBIDDEN_IMPORTS = {"subprocess", "socket", "requests", "httpx", "urllib.request"}
-FORBIDDEN_ATTRS = {"os.system", "os.popen", "subprocess.run", "subprocess.Popen", "subprocess.call", "subprocess.check_call", "subprocess.check_output"}
+FORBIDDEN_ATTRS = {
+    "os.system",
+    "os.popen",
+    "subprocess.run",
+    "subprocess.Popen",
+    "subprocess.call",
+    "subprocess.check_call",
+    "subprocess.check_output",
+}
 ALLOWED_DEPENDENCIES = {"pydantic>=2.6"}
 
 
@@ -39,12 +48,16 @@ def scan_file(path: Path) -> list[str]:
 
 
 def verify_dependencies() -> list[str]:
-    text = (ROOT / "pyproject.toml").read_text(encoding="utf-8")
-    start = text.find("dependencies = [")
-    end = text.find("]", start)
-    if start == -1 or end == -1:
-        return ["pyproject.toml: dependencies list missing"]
-    declared = {line.strip().strip(",").strip('"').strip("'") for line in text[start:end].splitlines()[1:] if line.strip() and not line.strip().startswith("#")}
+    try:
+        document = tomllib.loads((ROOT / "pyproject.toml").read_text(encoding="utf-8"))
+    except (OSError, tomllib.TOMLDecodeError) as exc:
+        return [f"pyproject.toml: unable to parse dependencies: {exc}"]
+
+    dependencies = document.get("project", {}).get("dependencies")
+    if not isinstance(dependencies, list) or not all(isinstance(item, str) for item in dependencies):
+        return ["pyproject.toml: project.dependencies must be an array of strings"]
+
+    declared = set(dependencies)
     findings: list[str] = []
     if declared - ALLOWED_DEPENDENCIES:
         findings.append(f"pyproject.toml: unexpected dependencies: {sorted(declared - ALLOWED_DEPENDENCIES)}")
