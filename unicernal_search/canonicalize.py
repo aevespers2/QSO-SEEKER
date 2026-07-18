@@ -5,7 +5,7 @@ import unicodedata
 
 ZERO_WIDTH = {"\u200b", "\u200c", "\u200d", "\u2060", "\ufeff"}
 BIDI = {"\u061c", "\u200e", "\u200f", "\u202a", "\u202b", "\u202c", "\u202d", "\u202e", "\u2066", "\u2067", "\u2068", "\u2069"}
-WHITESPACE = re.compile(r"[\t\r\n\f\v\u00a0\u1680\u2000-\u200a\u2028\u2029\u202f\u205f\u3000]+")
+WHITESPACE = re.compile(r"[ \t\r\n\f\v\u00a0\u1680\u2000-\u200a\u2028\u2029\u202f\u205f\u3000]+")
 
 
 def _is_emoji_or_symbol(ch: str) -> bool:
