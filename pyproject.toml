@@ -9,6 +9,9 @@ description = "Seeker intake, genome synthesis, and bounded QSO spawning"
 requires-python = ">=3.11"
 dependencies = []
 
+[project.scripts]
+qso-seeker = "qso_seeker.cli:main"
+
 [project.optional-dependencies]
 dev = ["pytest>=8"]
 
