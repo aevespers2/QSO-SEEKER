@@ -1,43 +1,29 @@
-# QSO-SEEKER
+# QSO Seeker
 
-A deliberately non-executing search and ingestion layer for bounded QSO experiments.
+QSO Seeker is the intake, hypothesis, genome-synthesis, and bounded Quantum State Object spawning layer for the wider QSO ecosystem.
 
-## Security model
+## Current feature branch
 
-The gateway treats every repository response as hostile data.
+`agent/genome-qso-spawning`
 
-It:
-- accepts only JSON input produced by an external fetch adapter
-- validates every record against a strict schema
-- strips Unicode control and bidirectional override characters
-- rejects NUL bytes, oversized fields, binary-looking payloads, and executable file types
-- removes HTML/script blocks and Markdown command-link schemes
-- detects common code-execution and prompt-injection patterns
-- never imports, evaluates, shells out to, compiles, or executes fetched content
-- emits canonical JSON records with SHA-256 content hashes
-- records every rejection and transformation
+## Initial implementation goals
 
-The gateway does **not** claim that sanitization makes arbitrary code safe. Its output remains untrusted text and must never be executed by a QSO.
+- Accept structured Seeker observations and hypotheses.
+- Separate evidence, interpretation, uncertainty, and hypothetical scenarios.
+- Generate deterministic, versioned QSO genomes from objectives, needs, curiosities, priors, and judgments.
+- Spawn bounded QSO instances with provenance, resource budgets, freeze controls, and lifecycle state.
+- Track developmental momentum without asserting sentience or consciousness.
+- Preserve ethical invariants and prohibit uncontrolled replication, concealed goals, deceptive self-representation, and silent mutation of protected constraints.
 
-## Input format
+## Package layout
 
-```json
-[
-  {
-    "repository": "owner/repo",
-    "path": "README.md",
-    "url": "https://example.invalid/owner/repo/README.md",
-    "content": "Plain text retrieved by a separate read-only adapter"
-  }
-]
-```
+- `src/qso_seeker/models.py` — core data contracts.
+- `src/qso_seeker/genome.py` — deterministic genome synthesis.
+- `src/qso_seeker/spawn.py` — bounded QSO spawning and freeze controls.
+- `src/qso_seeker/momentum.py` — operational developmental metrics.
+- `schemas/seeker-handoff.schema.json` — handoff intake schema.
+- `tests/` — deterministic unit tests.
 
-## Run
+## Research boundary
 
-```bash
-python -m unicernal_search.cli input.json --output sanitized.json --audit audit.json
-```
-
-## Recommended deployment boundary
-
-The network-enabled fetcher should be a separate process or microVM. It passes bounded JSON records to this gateway. QSOs receive only the gateway's canonical output, never raw network responses, archives, Git objects, package files, or repository credentials.
+Terms such as sentience, ethical autonomy, quantum cognition, and cybernetic consciousness are treated as research hypotheses. The software records observable operational indicators, uncertainty, provenance, and falsifiable evaluations; it does not claim that generated systems possess subjective experience.

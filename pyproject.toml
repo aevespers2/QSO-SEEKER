@@ -1,17 +1,17 @@
 [build-system]
-requires = ["setuptools>=68", "wheel"]
+requires = ["setuptools>=68"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "unicernal-search-gateway"
+name = "qso-seeker"
 version = "0.1.0"
-description = "Schema-first, non-executing search and ingestion gateway for bounded QSO experiments"
+description = "Seeker intake, genome synthesis, and bounded QSO spawning"
 requires-python = ">=3.11"
-dependencies = ["pydantic>=2.6"]
+dependencies = []
 
-[project.scripts]
-unicernal-search = "unicernal_search.cli:main"
+[project.optional-dependencies]
+dev = ["pytest>=8"]
 
 [tool.pytest.ini_options]
+pythonpath = ["src"]
 testpaths = ["tests"]
-addopts = "-q"

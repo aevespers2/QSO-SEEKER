@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://qso.example/schemas/seeker-handoff.schema.json",
+  "title": "Seeker Data Collection Handoff",
+  "type": "object",
+  "required": ["objectives", "needs", "curiosities", "scenarios", "synthetic_judgments", "analytic_judgments", "priors"],
+  "properties": {
+    "objectives": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
+    "needs": {"type": "array", "items": {"type": "string", "minLength": 1}},
+    "curiosities": {"type": "array", "items": {"type": "string", "minLength": 1}},
+    "scenarios": {"type": "array", "items": {"type": "string", "minLength": 1}},
+    "synthetic_judgments": {"type": "array", "items": {"type": "string", "minLength": 1}},
+    "analytic_judgments": {"type": "array", "items": {"type": "string", "minLength": 1}},
+    "priors": {
+      "type": "object",
+      "additionalProperties": {"type": "number", "minimum": 0, "maximum": 1}
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["content", "kind", "confidence", "source"],
+        "properties": {
+          "content": {"type": "string", "minLength": 1},
+          "kind": {"enum": ["observation", "measurement", "report", "inference", "hypothesis"]},
+          "confidence": {"type": "number", "minimum": 0, "maximum": 1},
+          "source": {"type": "string", "minLength": 1}
+        },
+        "additionalProperties": false
+      }
+    },
+    "metadata": {"type": "object"}
+  },
+  "additionalProperties": false
+}
