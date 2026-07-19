@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="520" viewBox="0 0 1120 520" role="img" aria-labelledby="title desc">
+  <title id="title">QSO-SEEKER architecture</title>
+  <desc id="desc">Untrusted records enter a strict schema boundary, are sanitized and classified, then become inert records, audit entries, reports, and independently validated contract artifacts.</desc>
+  <defs>
+    <style>
+      .box{fill:#fff;stroke:#263238;stroke-width:2;rx:12}.boundary{fill:#f7f7f7;stroke:#607d8b;stroke-width:2;stroke-dasharray:8 6;rx:16}.title{font:700 20px sans-serif;fill:#102027}.label{font:600 16px sans-serif;fill:#102027}.small{font:14px sans-serif;fill:#37474f}.arrow{stroke:#263238;stroke-width:2.2;fill:none;marker-end:url(#m)}
+    </style>
+    <marker id="m" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,6 L9,3 z" fill="#263238"/></marker>
+  </defs>
+  <text x="560" y="34" text-anchor="middle" class="title">QSO-SEEKER: hostile-input to inert-evidence boundary</text>
+  <rect x="25" y="70" width="245" height="160" class="boundary"/>
+  <text x="147" y="98" text-anchor="middle" class="label">Outside the sanitizer</text>
+  <rect x="55" y="120" width="185" height="80" class="box"/>
+  <text x="147" y="150" text-anchor="middle" class="label">External fetch adapter</text>
+  <text x="147" y="177" text-anchor="middle" class="small">Read-only, separately governed</text>
+
+  <rect x="315" y="70" width="480" height="360" class="boundary"/>
+  <text x="555" y="98" text-anchor="middle" class="label">QSO-SEEKER process</text>
+  <rect x="350" y="120" width="180" height="80" class="box"/>
+  <text x="440" y="150" text-anchor="middle" class="label">Strict input schema</text>
+  <text x="440" y="177" text-anchor="middle" class="small">Shape, size, path, URL</text>
+  <rect x="575" y="120" width="180" height="80" class="box"/>
+  <text x="665" y="150" text-anchor="middle" class="label">Sanitize and classify</text>
+  <text x="665" y="177" text-anchor="middle" class="small">Normalize, reject, flag</text>
+  <rect x="350" y="255" width="180" height="105" class="box"/>
+  <text x="440" y="288" text-anchor="middle" class="label">Accepted records</text>
+  <text x="440" y="315" text-anchor="middle" class="small">Inert canonical text</text>
+  <text x="440" y="338" text-anchor="middle" class="small">Content hashes</text>
+  <rect x="575" y="255" width="180" height="105" class="box"/>
+  <text x="665" y="288" text-anchor="middle" class="label">Audit and evidence</text>
+  <text x="665" y="315" text-anchor="middle" class="small">Decisions and reasons</text>
+  <text x="665" y="338" text-anchor="middle" class="small">JSON / optional PDF</text>
+
+  <rect x="840" y="70" width="250" height="360" class="boundary"/>
+  <text x="965" y="98" text-anchor="middle" class="label">Consumer boundary</text>
+  <rect x="875" y="130" width="180" height="90" class="box"/>
+  <text x="965" y="161" text-anchor="middle" class="label">Contract validation</text>
+  <text x="965" y="188" text-anchor="middle" class="small">Record and sidecar v1</text>
+  <rect x="875" y="270" width="180" height="110" class="box"/>
+  <text x="965" y="301" text-anchor="middle" class="label">Bounded consumers</text>
+  <text x="965" y="328" text-anchor="middle" class="small">Treat output as data</text>
+  <text x="965" y="351" text-anchor="middle" class="small">No execution authority</text>
+
+  <path d="M240 160 H350" class="arrow"/>
+  <path d="M530 160 H575" class="arrow"/>
+  <path d="M665 200 V255" class="arrow"/>
+  <path d="M575 308 H530" class="arrow"/>
+  <path d="M755 308 H875" class="arrow"/>
+  <path d="M530 308 C700 445,820 445,875 340" class="arrow"/>
+  <text x="560" y="478" text-anchor="middle" class="small">Current repository scope: local deterministic processing and validation. Network, credentials, publication, and downstream authority remain separate decisions.</text>
+</svg>
