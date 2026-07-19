@@ -19,7 +19,7 @@ python -m pip install -e .
 python -m pip install pytest mkdocs
 ```
 
-On Windows PowerShell, use `.venv\Scripts\Activate.ps1` instead of the POSIX activation command.
+On Windows PowerShell, use `.venv\Scripts\Activate.ps1` instead of the POSIX environment command.
 
 ## Repository map
 
