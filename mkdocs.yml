@@ -1,0 +1,30 @@
+site_name: QSO-SEEKER
+site_description: Hostile-input sanitization and deterministic evidence contracts for bounded QSO research
+repo_url: https://github.com/aevespers2/QSO-SEEKER
+repo_name: aevespers2/QSO-SEEKER
+edit_uri: edit/main/docs/
+
+theme:
+  name: readthedocs
+
+nav:
+  - Home: index.md
+  - Project Overview: project-overview.md
+  - Architecture: architecture.md
+  - Design Contracts: design-contracts.md
+  - API and CLI: api-and-cli.md
+  - Security Model: security.md
+  - Developer Onboarding: developer-guide.md
+  - Operations and Recovery: operations.md
+  - Repository Governance: governance.md
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - def_list
+  - fenced_code
+  - tables
+  - toc:
+      permalink: true
+
+strict: true
