@@ -4,7 +4,7 @@
 
 Status: `BLOCKED — CURRENT-MAIN REPLAY, P2 ISOLATION, P3 CONFORMANCE, RETAINED EVIDENCE, AND HUMAN APPROVAL REQUIRED`
 
-QSO-SEEKER has an implemented local sanitizer and an accepted canonical-record/attribution-sidecar contract v1. PR #10 merged the version-1 contract after exact-head verification. Later repository changes, including consent-capacity controls, mean earlier P0 evidence from PR #2 is not final release evidence for the current composition of `main`.
+QSO-SEEKER has an implemented local sanitizer, an accepted canonical-record/attribution-sidecar contract v1, and an accepted repository-wide consent-capacity control. PR #10 merged contract version 1, and PR #11 merged the exact-head consent-lock repair. Earlier P0 evidence from PR #2 still is not final release evidence for the current composition of `main`.
 
 No tag, package publication, scheduled collection, live/private retrieval, QSO runtime handoff, or shared-field publication is currently authorized.
 
@@ -45,7 +45,9 @@ The first eligible candidate is limited to:
 
 Canonical-record and attribution-sidecar contract v1 are accepted implementation on `main`. They define exact fields, strict canonical JSON, SHA-256 content/source/record/sidecar identities, normalized relative paths, HTTPS URLs, canonical collections, fail-closed validation, and an inert-data authority boundary.
 
-The new Pages documentation candidate records the implemented components, distinguishes basic sanitizer output from canonical handoff artifacts, and documents the target retrieval-to-sanitizer separation without claiming that P2 is already complete.
+The repository-wide consent-capacity control is also accepted on `main`: strict JSON validation, repository-wide scope semantics, focused regressions, pinned Actions, exact submitted-head checkout and assertion, least-privilege workflow permissions, disabled credential persistence, and retained checksum evidence were merged through PR #11.
+
+The Pages documentation candidate records the implemented components, distinguishes basic sanitizer output from canonical handoff artifacts, and documents the target retrieval-to-sanitizer separation without claiming that P2 is already complete.
 
 ## Acceptance gates
 
@@ -56,10 +58,10 @@ The new Pages documentation candidate records the implemented components, distin
 | Contract determinism | PASS FOR V1 | PR #10 merged deterministic canonical-record and sidecar v1 validation and mutation tests; final release replay is still required. |
 | Security isolation | FAIL | Retrieval and sanitizer must be independently permissioned; sanitizer must lack source credentials/network/repository-write authority and verify the handoff digest. |
 | Adversarial validation | PARTIAL | Existing tests cover core sanitizer and contract behavior; complete versioned handoff and consumer conformance fixtures remain pending. |
-| Workflow integrity | REVIEW | Exact-head and least-permission evidence exists for earlier candidates; final current-head evidence and retained artifacts are required. |
-| Consent-capacity control | REVIEW | Policy exists on `main`; current final-head validation and disposition of repair candidate PR #11 remain required. |
+| Workflow integrity | REVIEW | Exact-head and least-permission evidence exists for accepted contract and consent-control candidates; one final current-composition replay with retained artifacts is required. |
+| Consent-capacity control | PASS FOR CURRENT MAIN | PR #11 merged the repaired repository-wide validator, regression tests, exact-head workflow, pinned Actions, and retained evidence; final release replay remains required. |
 | Scope integrity | PASS | Broader collection, live checkpoint, experimental spawning, QSIO integration, and shared-field work remain separate candidates. |
-| Documentation | REVIEW | Pages foundation covers overview, architecture, contracts, API/CLI, security, onboarding, operations, governance, and diagrams; strict build evidence is required on the final documentation head. |
+| Documentation | REVIEW | Pages foundation covers overview, architecture, contracts, API/CLI, security, onboarding, operations, governance, and diagrams; strict build evidence is required on the reconciled final documentation head. |
 | Legal/privacy/license | BLOCKED | Source terms, attribution, privacy, retention, and any later collection/publication model require explicit approval. |
 | Provenance | PARTIAL | Contract hashes and exact commit identities exist; retained release bundle, complete checksums, attestations, and rejected-candidate records remain incomplete. |
 | Operations and rollback | PARTIAL | Procedures are documented; a final-head rollback exercise and retained result are required. |
@@ -72,7 +74,7 @@ The new Pages documentation candidate records the implemented components, distin
 - Canonical-record and attribution-sidecar specifications and machine-readable schemas.
 - Positive, negative, boundary, mutation, Unicode, dependency, digest-mismatch, and independent-consumer fixtures with expected identities.
 - Accepted, audit, JSON report, and representative PDF outputs.
-- Exact-head workflow logs, test reports, security verifier output, hidden-control results, permissions inventory, and documentation build output.
+- Exact-head workflow logs, test reports, security verifier output, hidden-control results, permissions inventory, consent-lock evidence, and documentation build output.
 - Artifact checksums, dependency inventory or SBOM where applicable, provenance manifest or attestation, and reviewer decisions.
 - Recovery and rollback exercise evidence.
 - Legal, privacy, attribution, source-term, and retention approval records.
@@ -88,8 +90,7 @@ Roll back on source drift, nondeterministic identities, execution paths, missing
 - Final current-main P0 replay and Architect acceptance with retained artifacts.
 - P2 independent retrieval/sanitizer permission split and digest-verified handoff.
 - P3 complete adversarial and consumer conformance fixtures.
-- Final consent-capacity control disposition after the repair candidate is reconciled.
-- Strict Pages build and review of the documentation foundation.
+- Strict Pages build and review of the reconciled documentation foundation.
 - Complete provenance, checksums, rollback exercise, privacy, source-term, attribution, retention, and release approval evidence.
 - Downstream consumers must not treat QSO-SEEKER artifacts as authoritative until the release contract is published by version and hash.
 
@@ -99,5 +100,6 @@ Roll back on source drift, nondeterministic identities, execution paths, missing
 - 2026-07-17 — Historical PR #2 exact-head checks passed for its candidate, but final retained evidence and Architect acceptance remained incomplete.
 - 2026-07-17 — Broader collection and private-overlay work was excluded from the first release.
 - 2026-07-18 — PR #10 merged canonical-record and attribution-sidecar contract v1 after exact-head verification.
-- 2026-07-18 — Consent-capacity policy and CI enforcement were added; a repair candidate remains under review.
+- 2026-07-18 — Consent-capacity policy and CI enforcement were added.
 - 2026-07-19 — Proposed a complete Pages, architecture, contract, API/CLI, security, onboarding, operations, governance, and diagram documentation foundation without changing runtime scope.
+- 2026-07-20 — PR #11 merged the exact-head repository-wide consent-lock repair; the documentation candidate was reconciled to the accepted workflow, validator, tests, and release status.
