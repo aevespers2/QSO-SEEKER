@@ -2,7 +2,7 @@
 
 QSO-SEEKER is a deliberately non-executing hostile-input boundary for bounded QSO research. It converts supported untrusted repository records into sanitized inert text, deterministic hashes, per-record audit decisions, optional evidence reports, and independently validated canonical handoff artifacts.
 
-> Sanitization does not make arbitrary content safe to execute or true. Every output remains untrusted data.
+> Sanitization does not make arbitrary content safe to execute, current, authoritative, or true. Every output remains untrusted data until each downstream consumer independently validates the applicable contracts and policy.
 
 ## Capabilities
 
@@ -20,7 +20,7 @@ QSO-SEEKER is a deliberately non-executing hostile-input boundary for bounded QS
 ```text
 separately governed source reader
               |
-              | bounded local JSON artifact
+              | bounded local artifact + declared digest
               v
        strict input schema
               |
@@ -28,12 +28,16 @@ separately governed source reader
               |
        accepted + audit + report
               |
-       canonical contract validation
+       canonical producer + v1 validation
+              |
+       temporal / policy / transport validation
               v
         bounded downstream consumer
 ```
 
-The sanitizer does not require network access, source credentials, repository-write authority, or a content-execution path. Retrieval, downstream consumption, and publication remain separate architecture and policy decisions.
+The sanitizer does not require network access, source credentials, repository-write authority, or a content-execution path. Retrieval, subject identity, temporal validity, canonical-state disposition, downstream consumption, and publication remain separate architecture and policy decisions.
+
+A valid canonical-record hash proves conformance to the local record contract. It does not independently prove that the record is current, non-replayed, bound to the correct long-lived subject, legally publishable, accepted into canonical state, or safe for runtime use.
 
 ## Install
 
@@ -86,14 +90,32 @@ The GitHub Pages source is under [`docs/`](docs/index.md) and is configured by [
 - [Project overview](docs/project-overview.md)
 - [Architecture and trust boundaries](docs/architecture.md)
 - [Canonical record and attribution contracts](docs/design-contracts.md)
+- [Obstruction and gluing analysis](docs/obstruction-and-gluing.md)
 - [CLI and Python API](docs/api-and-cli.md)
 - [Security model](docs/security.md)
 - [Developer onboarding](docs/developer-guide.md)
 - [Operations and recovery](docs/operations.md)
 - [Repository governance](docs/governance.md)
+- [Release and gluing punch list](punchlist.md)
+
+## Portfolio boundary
+
+The documentation proposes the following non-overlapping model, pending formal approval and compatibility fixtures:
+
+- QSO-SEEKER owns source sanitization, canonical-record v1 construction, attribution sidecars, and local rejection evidence.
+- `datarepo-temporal-invariants` owns subject, clock, uncertainty, freshness, replay, and ordering interpretation.
+- QSO-DIGITALIS owns domain-specific evidence interpretation and synthesis proposals.
+- Bridge owns version-preserving transport and evidence packaging.
+- Repository `1` owns quarantine admission, policy disposition, canonical state, correction, revocation, and recovery receipts.
+- QSO-STUDIO and AionUi present evidence without creating approval authority.
+- QSO-GENOMES, QuantumStateObjects, QSO-FABRIC, and `qsio-kernel` retain their own genome, runtime, orchestration, and semantic responsibilities.
+
+This is a documentation proposal. No adapter, credential, network route, runtime handoff, canonical-state authority, or publication path is activated.
 
 ## Project status
 
-The local sanitizer and canonical-record/attribution-sidecar v1 contract are implemented on `main`. Release remains blocked until the accepted task chain's remaining isolation, adversarial conformance, retained evidence, documentation validation, provenance, rollback, legal/privacy, and human-approval gates are complete. Draft collection, scheduling, experimental spawning, QSIO integration, and shared-field proposals do not expand the accepted baseline merely by existing in open pull requests.
+The local sanitizer and canonical-record/attribution-sidecar v1 contract are implemented on `main`. Release remains blocked until the accepted task chain's remaining current-composition replay, independent isolation, adversarial and cross-repository conformance, portfolio gluing, retained evidence, documentation validation, provenance, rollback, legal/privacy, and human-approval gates are complete.
 
-See [`taskchain.md`](taskchain.md), [`release.md`](release.md), and [`changelog.md`](changelog.md) for the current decision record.
+Draft collection, scheduling, action-protocol, experimental spawning, QSIO integration, and shared-field proposals do not expand the accepted baseline merely by existing in open pull requests.
+
+See [`taskchain.md`](taskchain.md), [`punchlist.md`](punchlist.md), [`release.md`](release.md), and [`changelog.md`](changelog.md) for the current decision record.
