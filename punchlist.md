@@ -72,7 +72,7 @@ This punch list converts the current task chain, release gates, documentation re
 
 ## P6 — Draft-candidate disposition
 
-- [ ] Reconcile or retire historical P0 candidate PR #2 against current `main`.
+- [x] Reconcile or retire historical P0 candidate PR #2 against current `main`. Closed without merge as preserved provenance on 2026-07-21; PR #14 remains the current preservation-safe reconciliation path. Evidence: `reports/semiweekly-repository-pruning-20260721.md`.
 - [ ] Decide whether the action-protocol candidate belongs in QSO-SEEKER, Repository `0`, or should be retired.
 - [ ] Decide whether the public/private collection-core candidate proceeds after P0-P5.
 - [ ] Decide whether the bounded live checkpoint remains useful after the isolation contract exists.
