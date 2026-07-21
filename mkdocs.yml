@@ -1,5 +1,5 @@
 site_name: QSO-SEEKER
-site_description: Hostile-input sanitization, deterministic evidence contracts, and portfolio gluing guidance for bounded QSO research
+site_description: Hostile-input sanitization, deterministic evidence contracts, source-observation envelopes, and portfolio gluing guidance for bounded QSO research
 repo_url: https://github.com/aevespers2/QSO-SEEKER
 repo_name: aevespers2/QSO-SEEKER
 edit_uri: edit/main/docs/
@@ -12,6 +12,7 @@ nav:
   - Project Overview: project-overview.md
   - Architecture: architecture.md
   - Design Contracts: design-contracts.md
+  - Source Observation Envelope: source-observation-envelope.md
   - Obstruction and Gluing: obstruction-and-gluing.md
   - API and CLI: api-and-cli.md
   - Security Model: security.md
