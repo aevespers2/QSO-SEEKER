@@ -13,6 +13,7 @@ All notable product, architecture, implementation, documentation, evidence, rele
 - 2026-07-18 — Accepted canonical-record and attribution-sidecar contract version 1 through merged PR #10.
 - 2026-07-19 — Reframed the next objective around current-main replay, independent retrieval/sanitizer handoff, adversarial conformance, and documentation acceptance.
 - 2026-07-20 — Added portfolio gluing as a release objective so local record validity is not confused with stable subject identity, temporal validity, policy approval, canonical state, or publication authority.
+- 2026-07-20 — Added a documentation-only candidate source-observation envelope so later subject, time, replay, policy, privacy, completion, correction, revocation, and recovery references do not require rewriting canonical-record v1.
 
 ### Architecture
 
@@ -25,6 +26,8 @@ All notable product, architecture, implementation, documentation, evidence, rele
 - 2026-07-20 — Added an eighteen-item obstruction ledger spanning isolation, record promotion, subject identity, temporal validity, evidence ownership, QSIO and genome overlap, public/private deployment, policy, canonicalization, correction, revocation, privacy, and recovery.
 - 2026-07-20 — Added pairwise gluing maps and triple-overlap witness requirements for retrieval/sanitization, temporal validation, Bridge transport, Repository `1` disposition, interfaces, genomes, runtime, private overlays, and incident recovery.
 - 2026-07-20 — Proposed a lowest-overlap ownership split among QSO-SEEKER, `datarepo-temporal-invariants`, QSO-DIGITALIS, Bridge, Repository `1`, QSO-STUDIO/AionUi, QSO-GENOMES, QuantumStateObjects, QSO-FABRIC, and `qsio-kernel`; no authority was activated.
+- 2026-07-20 — Defined candidate envelope bindings for exact Seeker artifacts, producer identity, stable subject and lineage references, temporal and replay receipts, collection completion, policy/privacy, correction, revocation, freeze, and recovery.
+- 2026-07-20 — Defined a fail-closed consumer sequence, namespaced reason-code domains, pairwise fixtures, and four triple-overlap witnesses while leaving ownership, serialization, signing, and registry decisions unresolved.
 
 ### Implementation
 
@@ -33,7 +36,7 @@ All notable product, architecture, implementation, documentation, evidence, rele
 - 2026-07-18 — Added canonical-record and attribution-sidecar v1 builders, validators, canonical JSON helpers, SHA-256 helpers, and deterministic mutation tests through PR #10.
 - 2026-07-19 — No runtime, schema, dependency, permission, retrieval, consumer, or publisher behavior was changed by the Pages documentation milestone.
 - 2026-07-20 — Documentation-branch reconciliation carried the accepted consent validator, regression tests, and pinned exact-head workflow from current `main`; no new implementation capability was introduced.
-- 2026-07-20 — Obstruction, punch-list, task, release, and navigation changes remained documentation-only and introduced no network, credential, source, schema, runtime, repository-write, or publication behavior.
+- 2026-07-20 — Obstruction, punch-list, task, release, navigation, and source-observation-envelope changes remained documentation-only and introduced no network, credential, source, schema, runtime, repository-write, canonical-state, or publication behavior.
 
 ### Documentation
 
@@ -44,6 +47,7 @@ All notable product, architecture, implementation, documentation, evidence, rele
 - 2026-07-20 — Updated task, release, and change records after PR #11 merged so Pages no longer describes the consent repair as pending.
 - 2026-07-20 — Added `docs/obstruction-and-gluing.md`, linked it from Pages navigation, and expanded `punchlist.md` into P0-P6, D0, and R0 workstreams.
 - 2026-07-20 — Reconciled `taskchain.md`, `release.md`, and this changelog with the new portfolio gluing and ownership gates.
+- 2026-07-20 — Added `docs/source-observation-envelope.md`, linked it from Pages and README navigation, and aligned the project overview, task chain, punch list, release plan, and changelog.
 
 ### Evidence
 
@@ -51,6 +55,7 @@ All notable product, architecture, implementation, documentation, evidence, rele
 - 2026-07-18 — PR #10 exact-head verification completed before canonical contract v1 was merged.
 - 2026-07-20 — PR #11 exact-head consent-lock evidence was accepted on `main`; strict MkDocs, consent-lock, and Security Envelope evidence must be regenerated for the reconciled documentation head.
 - 2026-07-20 — Cross-repository fixture and release-manifest requirements were documented; no pairwise or triple-overlap witness is represented as passing until exact-head artifacts exist.
+- 2026-07-20 — Source-observation-envelope fixtures and acceptance gates were specified, but no schema implementation, independent consumer, signature, route, or runtime evidence is represented as complete.
 
 ### Security
 
@@ -58,6 +63,7 @@ All notable product, architecture, implementation, documentation, evidence, rele
 - 2026-07-19 — Documented threat classes, schema and rejection controls, bounded neutralization, classification limits, content-addressed validation, consent-capacity policy, residual risk, consumer duties, and security-review checks.
 - 2026-07-20 — Recorded the merged repository-wide consent validator, duplicate-key and bypass rejection, immutable lock semantics, pinned Actions, least privilege, and exact-head evidence as accepted controls.
 - 2026-07-20 — Added fail-closed requirements for wrong-subject binding, stale or replayed evidence, correction and revocation propagation, private-overlay leakage, rejection-report redaction, and downstream cache invalidation.
+- 2026-07-20 — Added explicit rejection requirements for wrong producer or commit, altered bound artifacts, privacy-class downgrade, partial-collection promotion, missing policy receipts, and automatic canonical promotion.
 
 ### Release
 
@@ -66,10 +72,11 @@ All notable product, architecture, implementation, documentation, evidence, rele
 - 2026-07-19 — The documentation foundation remains a review candidate and does not mark any blocking release gate as passed without evidence.
 - 2026-07-20 — Consent-capacity control moved from repair review to accepted current-main status; this does not unblock release without final composition replay.
 - 2026-07-20 — Added portfolio ownership, independent consumer, cross-language fixture, correction/revocation, emergency-stop, and bounded-recovery gates to the release plan.
+- 2026-07-20 — Added a separate observation-envelope governance gate requiring an accepted neutral owner, namespace, serialization, signing or attestation, compatibility, migration, fixtures, and rollback.
 
 ### Deployment
 
-- No production service, authenticated retrieval, private-source access, source-content execution, scheduled collection, runtime handoff, canonical-state disposition, or shared-field publication is authorized.
+- No production service, authenticated retrieval, private-source access, source-content execution, scheduled collection, runtime handoff, canonical-state disposition, source-observation-envelope route, or shared-field publication is authorized.
 - 2026-07-19 — Added bounded local run, health, observability, failure, rollback, incident-response, retention, and publication-gate procedures.
 - 2026-07-20 — Documented the proposed end-to-end freeze, evidence-preservation, revocation, cache-invalidation, rollback, and bounded-restart requirements; no deployment or control path was activated.
 
