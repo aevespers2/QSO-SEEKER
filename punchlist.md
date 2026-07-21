@@ -37,30 +37,38 @@ This punch list converts the current task chain, release gates, documentation re
 - [ ] Add digest mismatch, stale, replay, wrong-subject, wrong-source, unsupported-version, and expected-head fixtures.
 - [ ] Add duplicate, contradictory, partial, correction, revocation, and cache-invalidation fixtures.
 - [ ] Demonstrate sanitizer → canonical producer agreement.
+- [ ] Demonstrate Seeker → source-observation envelope agreement without changing canonical-record v1.
 - [ ] Demonstrate Seeker → temporal validator → Repository `1` agreement.
 - [ ] Demonstrate Seeker → Bridge → QSO-STUDIO/AionUi agreement.
+- [ ] Demonstrate Seeker → QSO-DIGITALIS → QuantumStateObjects evidence-only behavior.
 - [ ] Demonstrate Seeker → QSO-GENOMES → QuantumStateObjects evidence-only behavior.
 - [ ] Bind all witness results to immutable commits and one evidence manifest.
 
 ## P4 — Portfolio contract ownership
 
-- [ ] Designate the owner of the cross-repository observation/evidence envelope.
-- [ ] Designate stable subject-identity and source-lineage ownership.
+- [ ] Designate the neutral owner of the cross-repository source-observation/evidence envelope.
+- [ ] Select the normative contract ID, package or registry location, canonical serialization, version negotiation, and signing or attestation method.
+- [ ] Designate stable subject-identity, source-lineage, device/environment authorization, and ownership-reference methods.
 - [ ] Designate clock, uncertainty, freshness, replay, and ordering ownership.
 - [ ] Approve the responsibility split among QSO-SEEKER, QSO-DIGITALIS, Bridge, Repository `1`, datarepo-temporal-invariants, QSO-GENOMES, QuantumStateObjects, QSO-FABRIC, and `qsio-kernel`.
-- [ ] Define the exact Seeker → Digitalis → Bridge → Repository `1` route or remove unsupported edges.
-- [ ] Define correction, revocation, freeze, recovery, and bounded-restart contracts.
-- [ ] Pin producer and consumer contract versions with compatibility and rollback guidance.
+- [ ] Define the exact Seeker → observation envelope → temporal validation → Digitalis/Bridge → Repository `1` route or remove unsupported edges.
+- [ ] Define collection-completion vocabulary that preserves `complete`, `partial`, `failed`, `unsupported`, and `unknown`.
+- [ ] Define namespaced reason-code registry ownership and compatibility.
+- [ ] Define policy, privacy, access, source-term, retention, and redaction reference ownership.
+- [ ] Define correction, supersession, revocation, freeze, downstream invalidation, recovery, and bounded-restart contracts.
+- [ ] Pin producer and consumer contract versions with compatibility, migration, and rollback guidance.
+- [ ] Preserve canonical-record and sidecar bytes during any envelope migration.
 
 ## P5 — Public and private deployment boundary
 
 - [ ] Define the public adapter interface and safe example registry.
 - [ ] Define the private deployment manifest without storing credentials, sessions, private locators, or sensitive raw artifacts in the public repository.
 - [ ] Approve source classes, terms, licenses, privacy purposes, retention periods, and redaction rules.
-- [ ] Separate accepted records, rejected evidence, raw source bytes, reports, logs, and publication artifacts by access class.
-- [ ] Verify evidence artifacts cannot leak private locators, source fragments, credentials, reviewer identities, or operational secrets.
+- [ ] Separate accepted records, rejected evidence, raw source bytes, reports, logs, observation envelopes, authority receipts, and publication artifacts by access class.
+- [ ] Verify evidence artifacts cannot leak private locators, source fragments, credentials, stable private-device identifiers, reviewer identities, or operational secrets.
 - [ ] Define deletion, correction, legal hold, and incident-preservation behavior.
 - [ ] Require policy-decision receipts before live or scheduled collection.
+- [ ] Define a separate minimized publication profile rather than publishing internal observation envelopes directly.
 
 ## P6 — Draft-candidate disposition
 
@@ -77,6 +85,7 @@ This punch list converts the current task chain, release gates, documentation re
 - [x] Add Pages navigation and project overview.
 - [x] Document architecture, components, trust boundaries, topology, and record lifecycle.
 - [x] Document canonical-record and attribution-sidecar v1.
+- [x] Document the candidate source-observation envelope, state machine, fail-closed consumer duties, reason-code domains, migration, and rollback.
 - [x] Document CLI, Python API, security, onboarding, operations, recovery, and governance.
 - [x] Add accessible architecture and lifecycle diagrams.
 - [x] Add obstruction and gluing analysis.
@@ -90,7 +99,7 @@ This punch list converts the current task chain, release gates, documentation re
 
 - [ ] Create one final release manifest binding source commit, contract versions, workflows, artifacts, checksums, toolchain, dependency inventory, permissions, and approvals.
 - [ ] Complete legal, privacy, attribution, licensing, retention, and source-term review.
-- [ ] Perform an end-to-end freeze, evidence-preservation, revocation, cache-invalidation, rollback, and bounded-recovery exercise.
+- [ ] Perform an end-to-end wrong-subject, stale, replay, correction, revocation, freeze, evidence-preservation, cache-invalidation, rollback, and bounded-recovery exercise.
 - [ ] Confirm no unresolved review threads, stale checks, superseded artifacts, or contradictory planning documents.
 - [ ] Obtain explicit release and publication approval.
 - [ ] Tag or publish only after every blocking gate passes.
