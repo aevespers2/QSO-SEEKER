@@ -42,7 +42,9 @@ PR #11 merged the repository-wide consent-capacity validator, focused regression
 
 ## P0 baseline status
 
-PR #2 remains an open historical P0 candidate, but later `main` changes mean its earlier exact-head evidence cannot serve as final release evidence for the current composition. P0 stays `REVIEW` until the accepted contract and consent-control baseline are replayed together as one immutable head with retained artifacts and no unresolved findings.
+Historical PR #2 was closed without merge on 2026-07-21 as preserved provenance because it predates the accepted contract v1, merged consent controls, and retained current-head evidence. Its branch, commits, comments, and prior workflow results remain available for regression investigation, but it is no longer an active release or review path.
+
+PR #14 is the sole preservation-safe current composition candidate. Its previous exact head `3ae6e0274841dceca4403b6812240bee948feb31` passed Documentation, Security Envelope, and Consent Capacity Lock workflows with retained artifacts. The semiweekly pruning report and planning updates changed the branch head, so that earlier evidence is historical only; P0 stays `REVIEW` until all required workflows pass again at the final immutable head and the Architect records disposition.
 
 ## Portfolio gluing status
 
@@ -54,7 +56,7 @@ The lowest-overlap working model keeps source sanitization and canonical-record 
 
 ## Separate draft candidates
 
-Open proposals for broader collection, a bounded live checkpoint, experimental genome and spawning behavior, QSIO integration, action orchestration, and the source-observation envelope remain separate candidates. They must not be described as accepted repository capability or used to bypass P0-P3 and G0 dependencies.
+Open proposals for broader collection, a bounded live checkpoint, experimental genome and spawning behavior, QSIO integration, action orchestration, and the source-observation envelope remain separate candidates. Historical PR #2 is retired and must not be treated as an active P0 path. The remaining drafts must not be described as accepted repository capability or used to bypass P0-P3 and G0 dependencies.
 
 ## Architectural boundary
 
@@ -78,3 +80,4 @@ Record commits, workflow runs, exact test commands and results, fixture and arti
 - 2026-07-20 — PR #11 merged the exact-head repository-wide consent-lock repair; the documentation branch was reconciled to carry the accepted workflow, validator, tests, and current governance status.
 - 2026-07-20 — Added portfolio obstruction and gluing analysis, cross-repository witness requirements, and an expanded punch list. No implementation or authority scope changed.
 - 2026-07-20 — Added a candidate source-observation envelope profile, fail-closed consumer sequence, reason-code domains, pairwise fixtures, and triple-overlap witnesses without changing canonical-record v1 or activating any route.
+- 2026-07-21 — Semiweekly pruning retired historical PR #2 without merge, preserved its evidence, recorded rollback by reopening, reduced active P0 ambiguity, and selected PR #14 as the sole current composition candidate. Evidence: `reports/semiweekly-repository-pruning-20260721.md`.
