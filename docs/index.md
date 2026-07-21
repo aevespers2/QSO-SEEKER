@@ -53,7 +53,7 @@ Each arrow requires a versioned contract and fail-closed fixtures. Successful tr
 | [Developer onboarding](developer-guide.md) | Setup, tests, documentation workflow, and contribution rules |
 | [Operations and recovery](operations.md) | Evidence handling, health checks, rollback, and incident response |
 | [Repository governance](governance.md) | Task-chain alignment, release posture, and decision ownership |
-| [Punch list](../punchlist.md) | P0-P6, documentation, release-evidence, and recovery work |
+| [Punch list](https://github.com/aevespers2/QSO-SEEKER/blob/main/punchlist.md) | P0-P6, documentation, release-evidence, and recovery work |
 
 ## First local run
 
