@@ -12,6 +12,7 @@ QSO-SEEKER is the portfolio boundary for converting untrusted repository materia
 - Deterministic accepted-record and audit JSON outputs.
 - Optional JSON and PDF evidence reports.
 - Canonical-record and attribution-sidecar contract version 1, including independent hash validation.
+- A candidate source-observation envelope profile that preserves local record identity while attaching separately governed subject, temporal, replay, policy, privacy, completion, correction, revocation, and recovery references.
 - A least-authority design in which retrieval, sanitization, temporal interpretation, policy disposition, downstream consumption, and publication are separately governed.
 
 ## Current authority boundary
@@ -20,16 +21,20 @@ The accepted repository scope is local processing and contract validation. QSO-S
 
 A valid record hash proves local contract conformance. It does not independently establish that the observation is current, non-replayed, bound to the correct long-lived subject, legally publishable, accepted by Repository `1`, or safe for runtime use.
 
+The source-observation envelope profile is documentation only. It does not change canonical-record v1, introduce an accepted schema package, or activate an external route.
+
 Proposed expansion work remains separate from the documented baseline until its own architecture, security, legal, privacy, provenance, compatibility, and rollback review succeeds.
 
 ## Portfolio gluing
 
-The obstruction analysis documents the contracts that must exist around QSO-SEEKER:
+The obstruction analysis and envelope profile document the contracts that must exist around QSO-SEEKER:
 
 ```text
 retrieval artifact
       ↓
 QSO-SEEKER sanitizer and canonical producer
+      ↓
+candidate source-observation envelope
       ↓
 temporal / subject / replay validation
       ↓
@@ -47,6 +52,7 @@ Each arrow requires a versioned contract and fail-closed fixtures. Successful tr
 | [Project overview](project-overview.md) | Goals, non-goals, users, outputs, and repository relationships |
 | [Architecture](architecture.md) | Components, data flow, boundaries, and failure behavior |
 | [Design contracts](design-contracts.md) | Canonical record, attribution sidecar, hashing, and compatibility |
+| [Source-observation envelope](source-observation-envelope.md) | Candidate cross-repository binding for subject, time, replay, policy, privacy, lifecycle, and recovery references |
 | [Obstruction and gluing](obstruction-and-gluing.md) | Cross-repository incompatibilities, ownership proposals, and pairwise/triple-overlap witnesses |
 | [API and CLI](api-and-cli.md) | Command-line usage and supported Python surfaces |
 | [Security model](security.md) | Threat model, controls, residual risk, and consumer obligations |
