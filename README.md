@@ -30,6 +30,8 @@ separately governed source reader
               |
        canonical producer + v1 validation
               |
+       candidate source-observation envelope
+              |
        temporal / policy / transport validation
               v
         bounded downstream consumer
@@ -38,6 +40,8 @@ separately governed source reader
 The sanitizer does not require network access, source credentials, repository-write authority, or a content-execution path. Retrieval, subject identity, temporal validity, canonical-state disposition, downstream consumption, and publication remain separate architecture and policy decisions.
 
 A valid canonical-record hash proves conformance to the local record contract. It does not independently prove that the record is current, non-replayed, bound to the correct long-lived subject, legally publishable, accepted into canonical state, or safe for runtime use.
+
+The candidate source-observation envelope profile documents how subject, time, replay, policy, privacy, completion, correction, revocation, and recovery references can accompany a canonical record without changing canonical-record v1. It remains a documentation proposal and activates no route, schema package, credential, or authority.
 
 ## Install
 
@@ -90,6 +94,7 @@ The GitHub Pages source is under [`docs/`](docs/index.md) and is configured by [
 - [Project overview](docs/project-overview.md)
 - [Architecture and trust boundaries](docs/architecture.md)
 - [Canonical record and attribution contracts](docs/design-contracts.md)
+- [Candidate source-observation envelope profile](docs/source-observation-envelope.md)
 - [Obstruction and gluing analysis](docs/obstruction-and-gluing.md)
 - [CLI and Python API](docs/api-and-cli.md)
 - [Security model](docs/security.md)
@@ -103,6 +108,7 @@ The GitHub Pages source is under [`docs/`](docs/index.md) and is configured by [
 The documentation proposes the following non-overlapping model, pending formal approval and compatibility fixtures:
 
 - QSO-SEEKER owns source sanitization, canonical-record v1 construction, attribution sidecars, and local rejection evidence.
+- The candidate source-observation envelope binds Seeker artifacts to external subject, temporal, policy, privacy, completion, correction, revocation, and recovery references without rewriting local record identity.
 - `datarepo-temporal-invariants` owns subject, clock, uncertainty, freshness, replay, and ordering interpretation.
 - QSO-DIGITALIS owns domain-specific evidence interpretation and synthesis proposals.
 - Bridge owns version-preserving transport and evidence packaging.
@@ -116,6 +122,6 @@ This is a documentation proposal. No adapter, credential, network route, runtime
 
 The local sanitizer and canonical-record/attribution-sidecar v1 contract are implemented on `main`. Release remains blocked until the accepted task chain's remaining current-composition replay, independent isolation, adversarial and cross-repository conformance, portfolio gluing, retained evidence, documentation validation, provenance, rollback, legal/privacy, and human-approval gates are complete.
 
-Draft collection, scheduling, action-protocol, experimental spawning, QSIO integration, and shared-field proposals do not expand the accepted baseline merely by existing in open pull requests.
+Draft collection, scheduling, action-protocol, experimental spawning, QSIO integration, shared-field, and observation-envelope proposals do not expand the accepted baseline merely by existing in open pull requests.
 
 See [`taskchain.md`](taskchain.md), [`punchlist.md`](punchlist.md), [`release.md`](release.md), and [`changelog.md`](changelog.md) for the current decision record.
