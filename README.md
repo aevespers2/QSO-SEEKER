@@ -43,6 +43,8 @@ A valid canonical-record hash proves conformance to the local record contract. I
 
 The candidate source-observation envelope profile documents how subject, time, replay, policy, privacy, completion, correction, revocation, and recovery references can accompany a canonical record without changing canonical-record v1. It remains a documentation proposal and activates no route, schema package, credential, or authority.
 
+The source-rights and privacy review guide separates access, purpose, terms, privacy, retention, handoff, and publication decisions. It is documentation only: public visibility is not treated as permission to collect, correlate, retain, or republish, and unresolved evidence keeps the route closed.
+
 ## Install
 
 Requires Python 3.11 or later.
@@ -95,6 +97,7 @@ The GitHub Pages source is under [`docs/`](docs/index.md) and is configured by [
 - [Architecture and trust boundaries](docs/architecture.md)
 - [Canonical record and attribution contracts](docs/design-contracts.md)
 - [Candidate source-observation envelope profile](docs/source-observation-envelope.md)
+- [Source rights and privacy review](docs/source-rights-and-privacy-review.md)
 - [Obstruction and gluing analysis](docs/obstruction-and-gluing.md)
 - [CLI and Python API](docs/api-and-cli.md)
 - [Security model](docs/security.md)
@@ -108,7 +111,7 @@ The GitHub Pages source is under [`docs/`](docs/index.md) and is configured by [
 The documentation proposes the following non-overlapping model, pending formal approval and compatibility fixtures:
 
 - QSO-SEEKER owns source sanitization, canonical-record v1 construction, attribution sidecars, and local rejection evidence.
-- The candidate source-observation envelope binds Seeker artifacts to external subject, temporal, policy, privacy, completion, correction, revocation, and recovery references without rewriting local record identity.
+- The candidate source-observation envelope binds Seeker artifacts to external subject, temporal, replay, policy, privacy, completion, correction, revocation, and recovery references without rewriting local record identity.
 - `datarepo-temporal-invariants` owns subject, clock, uncertainty, freshness, replay, and ordering interpretation.
 - QSO-DIGITALIS owns domain-specific evidence interpretation and synthesis proposals.
 - Bridge owns version-preserving transport and evidence packaging.

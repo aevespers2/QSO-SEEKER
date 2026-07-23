@@ -59,16 +59,22 @@ This punch list converts the current task chain, release gates, documentation re
 - [ ] Pin producer and consumer contract versions with compatibility, migration, and rollback guidance.
 - [ ] Preserve canonical-record and sidecar bytes during any envelope migration.
 
-## P5 — Public and private deployment boundary
+## P5 — Source rights, privacy, and deployment boundary
 
+- [x] Document independent review axes for access, purpose, terms/license, privacy, sensitivity, retention, transformation, sharing, and publication.
+- [x] Document fail-closed review states, source-class starting dispositions, artifact-class separation, and reviewer onboarding.
+- [ ] Assign named legal/source-rights, privacy, security, retention, deletion, legal-hold, and publication decision owners.
 - [ ] Define the public adapter interface and safe example registry.
 - [ ] Define the private deployment manifest without storing credentials, sessions, private locators, or sensitive raw artifacts in the public repository.
 - [ ] Approve source classes, terms, licenses, privacy purposes, retention periods, and redaction rules.
+- [ ] Record current canonical terms or license snapshots and validity windows for every permitted source class.
+- [ ] Require a bounded-purpose and data-minimization disposition before any retrieval route is enabled.
 - [ ] Separate accepted records, rejected evidence, raw source bytes, reports, logs, observation envelopes, authority receipts, and publication artifacts by access class.
 - [ ] Verify evidence artifacts cannot leak private locators, source fragments, credentials, stable private-device identifiers, reviewer identities, or operational secrets.
-- [ ] Define deletion, correction, legal hold, and incident-preservation behavior.
+- [ ] Define deletion, correction, withdrawal, expiry, supersession, legal hold, and incident-preservation behavior.
 - [ ] Require policy-decision receipts before live or scheduled collection.
 - [ ] Define a separate minimized publication profile rather than publishing internal observation envelopes directly.
+- [ ] Validate keyboard, zoom/reflow, screen-reader, cognitive-access, and non-color state communication on the exact publication candidate.
 
 ## P6 — Draft-candidate disposition
 
@@ -86,6 +92,7 @@ This punch list converts the current task chain, release gates, documentation re
 - [x] Document architecture, components, trust boundaries, topology, and record lifecycle.
 - [x] Document canonical-record and attribution-sidecar v1.
 - [x] Document the candidate source-observation envelope, state machine, fail-closed consumer duties, reason-code domains, migration, and rollback.
+- [x] Document source-rights, privacy, retention, correction, withdrawal, deletion, legal-hold, handoff, and publication-review boundaries.
 - [x] Document CLI, Python API, security, onboarding, operations, recovery, and governance.
 - [x] Add accessible architecture and lifecycle diagrams.
 - [x] Add obstruction and gluing analysis.
