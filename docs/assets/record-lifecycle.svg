@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="300" viewBox="0 0 1120 300" role="img" aria-labelledby="title desc">
+  <title id="title">QSO-SEEKER record lifecycle</title>
+  <desc id="desc">A record moves through validation, rejection or sanitization, hashing, evidence generation, contract validation, and bounded handoff.</desc>
+  <defs>
+    <style>.box{fill:#fff;stroke:#263238;stroke-width:2;rx:12}.label{font:600 15px sans-serif;fill:#102027}.small{font:13px sans-serif;fill:#37474f}.arrow{stroke:#263238;stroke-width:2;fill:none;marker-end:url(#m)}.reject{fill:#fafafa;stroke:#455a64;stroke-width:2;rx:12}</style>
+    <marker id="m" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#263238"/></marker>
+  </defs>
+  <rect x="25" y="90" width="135" height="70" class="box"/><text x="92" y="119" text-anchor="middle" class="label">Raw JSON record</text><text x="92" y="143" text-anchor="middle" class="small">Untrusted text</text>
+  <rect x="205" y="90" width="135" height="70" class="box"/><text x="272" y="119" text-anchor="middle" class="label">Schema check</text><text x="272" y="143" text-anchor="middle" class="small">Fail closed</text>
+  <rect x="385" y="90" width="135" height="70" class="box"/><text x="452" y="119" text-anchor="middle" class="label">Sanitize</text><text x="452" y="143" text-anchor="middle" class="small">Normalize / neutralize</text>
+  <rect x="565" y="90" width="135" height="70" class="box"/><text x="632" y="119" text-anchor="middle" class="label">Classify</text><text x="632" y="143" text-anchor="middle" class="small">Flags / transforms</text>
+  <rect x="745" y="90" width="135" height="70" class="box"/><text x="812" y="119" text-anchor="middle" class="label">Hash and record</text><text x="812" y="143" text-anchor="middle" class="small">Content / provenance</text>
+  <rect x="925" y="90" width="165" height="70" class="box"/><text x="1007" y="119" text-anchor="middle" class="label">Validate and hand off</text><text x="1007" y="143" text-anchor="middle" class="small">Inert artifact only</text>
+  <rect x="205" y="215" width="315" height="55" class="reject"/><text x="362" y="239" text-anchor="middle" class="label">Rejected input</text><text x="362" y="258" text-anchor="middle" class="small">Reason preserved in the audit output</text>
+  <path d="M160 125 H205" class="arrow"/><path d="M340 125 H385" class="arrow"/><path d="M520 125 H565" class="arrow"/><path d="M700 125 H745" class="arrow"/><path d="M880 125 H925" class="arrow"/>
+  <path d="M272 160 V215" class="arrow"/><path d="M452 160 V215" class="arrow"/>
+  <text x="560" y="40" text-anchor="middle" class="label">Deterministic processing path</text>
+</svg>

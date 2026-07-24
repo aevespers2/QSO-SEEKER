@@ -2,47 +2,86 @@
 
 ## Repository role
 
-Read-only retrieval boundary, hostile-input sanitization, canonical-record production, attribution sidecars, and evidence reports for QSO experiments.
+Read-only hostile-input boundary for bounded QSO research: strict local record validation, inert text sanitization, canonical-record production, attribution sidecars, audit evidence, and independently validated artifact handoff.
 
 States: `PROPOSED` · `READY` · `IN PROGRESS` · `BLOCKED` · `REVIEW` · `DONE`
 
 ## Product directive
 
-- **Next objective:** Accept or reject the exact current PR #2 security/CLI baseline, then version the canonical-record and attribution contracts before broader collection work.
-- **User outcome:** A researcher can transform supported untrusted public input into deterministic accepted/rejected inert records with provenance and hashes, while sanitization has no credentials, network access, repository-write permission, or content-execution path.
-- **MVP scope:** exact-head baseline; versioned canonical-record and attribution schemas; independently permissioned retrieval and sanitizer jobs with digest-verified artifact-only handoff; adversarial fixtures for concealment, injection, executable/binary inputs, malformed attribution, oversize, and dependency drift.
-- **Priority:** PR #2 P0 disposition and accepted P1-P3 contracts/isolation precede source-registry expansion, live/private overlays, scheduled collection, Digital Consciousness Field publication, or runtime integration.
-- **Success criteria:** complete checks pass at one immutable accepted head; outputs/hashes are repeatable; sanitizer is credential-free and network-free; missing/changed digests fail closed; no fetched material executes; documentation, licensing, retention, and privacy statements match actual behavior.
-- **Non-goals:** general crawling, authenticated/private-source acquisition, autonomous learning, executable processing, browser automation, scheduled live collection, runtime authority, or publication into a shared field before separate approval.
-- **Release rationale:** QSO-SEEKER is the portfolio hostile-input boundary; expanding collection before the canonical contract and isolation gates are accepted would increase risk and create competing release paths.
+- **Next objective:** replay the accepted canonical-record v1 and repository-wide consent-control baseline on one immutable current head, then implement the independently permissioned retrieval-to-sanitizer artifact handoff and complete adversarial and cross-repository conformance.
+- **User outcome:** a researcher can convert supported untrusted public input into deterministic accepted or rejected inert records with provenance and hashes while the sanitizer has no source credentials, network dependency, repository-write permission, content-execution path, or authority to promote evidence into canonical truth.
+- **Accepted scope:** local CLI processing; strict schemas; sanitization and rejection; audit and report output; canonical-record and attribution-sidecar contract v1; repository security and consent-capacity controls.
+- **Documentation candidate:** source-observation-envelope and source-rights/privacy profiles, plus a synthetic machine-readable source-review record and fail-closed contradiction validator, show how accepted Seeker artifacts could bind to separately governed subject, temporal, replay, policy, privacy, completion, correction, revocation, recovery, access, purpose, terms, retention, consumer, and publication decisions without changing canonical-record v1 or granting source authority.
+- **Priority:** P0 baseline disposition and P2-P3 isolation/conformance precede source-registry expansion, live or scheduled collection, private overlays, experimental spawning, QSIO runtime integration, shared-field publication, or downstream authority.
+- **Success criteria:** one immutable accepted head has reproducible tests, deterministic contract fixtures and hashes, credential-free sanitizer isolation, digest-verified handoff, independent consumer witnesses, retained evidence, accurate Pages documentation, provenance, rollback, legal/source-rights/privacy review, and explicit human approval.
+- **Non-goals:** general crawling, authenticated/private-source acquisition, executable processing, browser automation, autonomous truth promotion, unsupervised learning, repository mutation from source content, canonical-state authority, or publication before separate approval.
 
 ## Active chain
 
 | Priority | Task | Owner | Depends on | Status | Acceptance criteria |
 |---|---|---|---|---|---|
-| P0 | Establish and disposition the reproducible security/CLI baseline | QSOBuilder / Architect | — | REVIEW | PR #2 exact current head passes clean install, verifier, tests, hidden-control scan, exact-source assertion, minimum permissions, and Architect disposition with retained evidence expectations recorded. |
-| P1 | Version the canonical record and attribution-sidecar contract | QSOBuilder | P0 | PROPOSED | Schemas and fixtures define fields, transformations, limits, rejection reasons, provenance, hashes, migration, and independent consumer validation. |
-| P2 | Split retrieval and sanitizer into independently permissioned jobs | QSOBuilder | P0 | PROPOSED | Fetch is read-only; sanitizer receives a verified inert artifact, has no network/repository credential, and fails closed on missing or changed digest. |
-| P3 | Publish adversarial conformance fixtures | Builder | P1 and P2 | PROPOSED | Hostile and malformed inputs produce deterministic accepted/rejected outputs without execution or provenance loss. |
-| P4 | Evaluate broader public collection/private-overlay proposal | Architect / Security / Legal | P0-P3 accepted | BLOCKED | Draft PR #5 receives separate scope, source/legal/privacy/license/retention/schedule review and cannot supersede P0 or activate live/scheduled collection. |
+| P0 | Disposition the reproducible security and CLI baseline | QSOBuilder / Architect | — | REVIEW | Current baseline, including contract v1 and the merged consent-lock repair, is replayed on a final immutable head with clean install, complete tests, verifier, hidden-control scan, exact-source assertion, minimum permissions, retained evidence, and Architect acceptance. |
+| P1 | Version canonical record and attribution-sidecar semantics | QSOBuilder | P0 evidence basis | DONE | Contract identifiers, exact fields, canonical JSON, content/source/record/sidecar hashes, fail-closed validation, compatibility rules, and deterministic mutation tests were merged in PR #10. |
+| P2 | Split retrieval and sanitizer into independently permissioned jobs | QSOBuilder | P0 | PROPOSED | Source reading is read-only; sanitizer receives a bounded artifact plus digest, has no source credentials/network/repository-write token, and fails closed on a missing or changed digest. |
+| P3 | Publish adversarial and consumer conformance fixtures | Builder | P1 and P2 | PROPOSED | Versioned fixtures cover concealment, injection, executable/binary input, malformed attribution, oversize, dependency drift, digest mismatch, mutation, cross-language canonicalization, and independent consumer validation. |
+| G0 | Resolve portfolio obstruction and gluing contracts | Architect / Contract Owners | P1 | REVIEW | Subject identity, source lineage, time/freshness/replay, evidence-envelope, correction/revocation, reason-code, privacy/retention, and end-to-end freeze/recovery ownership are assigned with pairwise and triple-overlap fixtures. |
+| G1 | Review and assign the candidate source-observation envelope profile | Architect / Neutral Contract Owner | G0 | PROPOSED | A neutral owner, contract ID, canonical serialization, signing/attestation method, subject and temporal bindings, policy/privacy fields, lifecycle receipts, compatibility rules, and rollback plan are approved without modifying canonical-record v1. |
+| G2 | Review source rights, privacy, retention, and publication disposition | Legal / Privacy / Security / Architect | P2 design and G0 | REVIEW | The documentation method and synthetic contradiction-checking record are complete; approval still requires named decision owners, current terms/license evidence, bounded purpose, minimization, access classes, retention, correction/withdrawal/deletion/legal-hold rules, consumer limits, publication separation, and exact source-specific review evidence. |
+| D0 | Establish Pages and developer documentation foundation | Documentation / Architect | P1 | REVIEW | Pages navigation, project overview, architecture and lifecycle diagrams, contracts, source-observation envelope, source-rights/privacy review, source-review record, obstruction/gluing analysis, API/CLI, security, onboarding, operations, governance, punch list, task chain, release plan, changelog, and daily benchmark report build in strict mode and match current repository evidence. |
+| P4 | Evaluate broader collection and private-overlay proposal | Architect / Security / Legal | P0-P3 and G0-G2 accepted | BLOCKED | Collection sources, source terms, privacy, retention, schedule, permissions, provenance, rollback, licensing, policy receipts, and publisher contracts receive a separate bounded review. |
+| P5 | Evaluate experimental genome, spawning, action-protocol, and QSIO candidates | Architect / Security / Research | P0-P3 and G0 accepted | BLOCKED | Responsibility overlap, research claims, capability limits, consent policy, freeze behavior, lineage, evidence, kernel ownership, migrations, conformance, and rollback are independently approved without changing the sanitizer baseline implicitly. |
 
-## P0 baseline candidate — PR #2
+## Accepted contract baseline
 
-**Status:** `REVIEW — CURRENT EXACT-HEAD CI PASSED; ARCHITECT DISPOSITION AND RETAINED ARTIFACT STRATEGY PENDING`
+PR #10 merged canonical-record and attribution-sidecar contract version 1 after exact-head verification. Version 1 defines strict UTF-8 canonical JSON, exact field sets, deterministic SHA-256 identities, normalized relative paths, HTTPS source URLs, canonical collections, fail-closed validators, and an explicit inert-data authority boundary.
 
-PR #2 remains the single bounded P0 path. Current head `306dfa4104c12594b23dda8111e1c80edb0be397` is open and mergeable. Security Envelope run `29580240905` passed exact submitted-head checkout/assertion, editable installation, capability-envelope verification, adversarial/deterministic tests, and hidden-control scanning. No workflow artifacts were retained, and P1-P3 remain incomplete; therefore P0 is review evidence, not a release.
+This acceptance does not prove or authorize independent retrieval/sanitizer isolation, stable observed-subject identity, temporal validity, replay protection, live collection, source credentials, repository writes, scheduled operation, runtime use, publication, canonical-state disposition, or autonomous learning.
 
-## Deferred expansion candidate — draft PR #5
+## Accepted consent-control baseline
 
-Draft PR #5 head `49f07a4d79c78cc2832dc7a4e9930db7b7d3c51f` proposes source registries, reference adapters, deterministic fixture collection, private deployment overlays, a scheduled workflow, a draft source-available license, and Digital Consciousness Field publication envelopes. The proposal is mergeable but remains outside the accepted hostile-input MVP. It must stay inert until P0-P3 are accepted and a separate architecture, security, legal/license, privacy, retention, provenance, scheduling, rollback, and downstream-contract review authorizes a bounded later version.
+PR #11 merged the repository-wide consent-capacity validator, focused regression tests, pinned Actions, exact-head checkout assertion, minimum `contents: read` permissions, credential persistence disabled, and retained SHA-256 evidence. The control is accepted on `main`, but release acceptance still requires one final replay of the complete current composition.
+
+## P0 baseline status
+
+Historical PR #2 was closed without merge on 2026-07-21 as preserved provenance because it predates the accepted contract v1, merged consent controls, and retained current-head evidence. Its branch, commits, comments, and prior workflow results remain available for regression investigation, but it is no longer an active release or review path.
+
+PR #14 remains the sole preservation-safe current composition candidate. Its validated integration parent `49e7ff008b04fd386ad86bd3881105821c4b55e6` passed Source Review Record run `30062851717`, Documentation run `30062851723`, Security Envelope run `30062851704`, and Consent Capacity Lock run `30062851750`, with four retained artifacts. The daily benchmark and planning-evidence closure are descendants of that generation; every moved head must independently revalidate before P0 or D0 disposition.
+
+## Portfolio gluing status
+
+The documentation candidate records eighteen active integration obstructions. The most consequential are incomplete retrieval/sanitizer isolation; absence of stable subject, clock, freshness, and replay semantics; overlapping validation and canonical-handoff claims among QSO-SEEKER, QSO-DIGITALIS, Bridge, and Repository `1`; and unresolved ownership of shared QSO envelopes, correction, revocation, reason codes, privacy, retention, emergency stop, and recovery.
+
+The candidate source-observation envelope decomposes these missing overlaps into explicit logical fields, state transitions, fail-closed consumer duties, reason-code domains, pairwise fixtures, and triple-overlap witnesses. The source-rights and privacy review adds a separate decision layer for access, purpose, terms, sensitivity, minimization, retention, consumer disclosure, and publication. The synthetic source-review record makes request-to-decision, parser-ambiguity, type, and temporal-window contradictions testable. All three remain documentation or review evidence only and have no accepted normative contract identifier or operational owner.
+
+The lowest-overlap working model keeps source sanitization and canonical-record v1 in QSO-SEEKER, temporal interpretation in `datarepo-temporal-invariants`, domain interpretation in QSO-DIGITALIS, transport in Bridge, canonical disposition in Repository `1`, presentation in QSO-STUDIO/AionUi, genome authority in QSO-GENOMES, and runtime/orchestration in QuantumStateObjects/QSO-FABRIC. This is a proposal only until accepted contracts and fixtures exist.
+
+## Separate draft candidates
+
+Open proposals for broader collection, experimental genome and spawning behavior, QSIO integration, and action orchestration remain separate candidates. Historical PR #2 and stale collection-core PR #5 are retired and must not be treated as active P0 paths. The remaining drafts must not be described as accepted repository capability or used to bypass P0-P3 and G0-G2 dependencies.
 
 ## Architectural boundary
 
-Until P2 is accepted, retrieval and sanitization are only logically separated. Documentation must not claim process/container/microVM isolation, safe live collection, or authorized field publication. Private overlays and credentials are deployment-specific and may not enter public artifacts or candidate CI.
+Retrieval and sanitization are conceptually separate, but documentation may claim independently enforced job or process isolation only after P2 implementation and exact-head evidence. The basic sanitizer output is not automatically a canonical-record v1 artifact; a producer must construct complete provenance and contract identity, and every consumer must validate independently.
 
-## Builder Log
+A canonical record proves conformance to its local content and provenance contract. It does not independently prove currentness, truth, policy approval, stable subject identity, source rights, privacy approval, canonical-state acceptance, runtime safety, correction status, or publication authority. Candidate review documents add references and procedures for those concerns without changing local record identity, and each decision still requires its own accepted owner and receipt.
 
-Record commits, workflow runs, exact test commands/results, fixture and artifact hashes, permissions, source/license review, rejected samples, residual risks, rollback evidence, and follow-ups.
+## Builder rules
 
-- 2026-07-17 — PR #2 current head `306dfa4104c12594b23dda8111e1c80edb0be397` passed Security Envelope run `29580240905`; no artifacts were retained and Architect disposition remains pending.
-- 2026-07-17 — Classified draft PR #5 as a later collection/deployment-overlay proposal outside P0-P3; no schedule, live retrieval, private source, license, or Digital Consciousness Field publication capability is authorized.
+Execute only the first unblocked task whose dependencies are accepted. External content remains hostile data. Do not broaden network, credential, retrieval, repository-write, runtime, publication, or canonical-state authority through documentation, fixtures, or a draft candidate. Every completion claim must identify the immutable source, commands, environment, results, artifacts, limitations, and rollback path.
+
+## Builder log
+
+Record commits, workflow runs, exact test commands and results, fixture and artifact hashes, permissions, source/license review, rejection samples, residual risks, documentation build output, rollback evidence, and human decisions.
+
+- 2026-07-17 — Historical PR #2 baseline reached Architect review after exact-head workflow evidence; retained release artifacts and final current-main acceptance remained absent.
+- 2026-07-17 — Broader collection and private-overlay work was classified outside the first hostile-input release.
+- 2026-07-18 — PR #10 merged canonical-record and attribution-sidecar contract v1 after exact-head verification.
+- 2026-07-18 — Repository-wide consent-capacity policy and CI enforcement were added.
+- 2026-07-19 — Pages, architecture, contracts, API/CLI, security, onboarding, operations, and governance documentation foundation proposed under D0 without changing runtime scope.
+- 2026-07-20 — PR #11 merged the exact-head repository-wide consent-lock repair; the documentation branch was reconciled to carry the accepted workflow, validator, tests, and current governance status.
+- 2026-07-20 — Added portfolio obstruction and gluing analysis, cross-repository witness requirements, and an expanded punch list. No implementation or authority scope changed.
+- 2026-07-20 — Added a candidate source-observation envelope profile, fail-closed consumer sequence, reason-code domains, pairwise fixtures, and triple-overlap witnesses without changing canonical-record v1 or activating any route.
+- 2026-07-21 — Semiweekly pruning retired historical PR #2 without merge, preserved its evidence, recorded rollback by reopening, reduced active P0 ambiguity, and selected PR #14 as the sole current composition candidate. Evidence: `reports/semiweekly-repository-pruning-20260721.md`.
+- 2026-07-23 — Added a documentation-only source-rights and privacy review method with independent access, purpose, terms, minimization, retention, handoff, correction, withdrawal, deletion, legal-hold, and publication states; no collection or processing authority changed.
+- 2026-07-24 — Added a synthetic source-review record, daily Seeker benchmark, strict validator, hostile contradiction tests, complete repository replay, and exact-SHA evidence workflow without granting operational authority.
+- 2026-07-24 — Repaired duplicate-key and non-standard-constant acceptance, `not_before` enforcement, boolean retention type confusion, and validity-window evidence; all four resulting workflows passed at validated parent `49e7ff008b04fd386ad86bd3881105821c4b55e6`.
