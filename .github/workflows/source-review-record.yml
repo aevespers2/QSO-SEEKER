@@ -6,6 +6,7 @@ on:
       - "docs/source-review-record.md"
       - "docs/examples/source-review-record-v1.json"
       - "scripts/validate_source_review_record.py"
+      - "scripts/validate_daily_review.py"
       - "tests/test_source_review_record.py"
       - "reports/daily-seeker-review-20260723.*"
       - "mkdocs.yml"
@@ -16,6 +17,7 @@ on:
       - "docs/source-review-record.md"
       - "docs/examples/source-review-record-v1.json"
       - "scripts/validate_source_review_record.py"
+      - "scripts/validate_daily_review.py"
       - "tests/test_source_review_record.py"
       - "reports/daily-seeker-review-20260723.*"
       - "mkdocs.yml"
@@ -82,6 +84,16 @@ jobs:
           python -m unittest discover -s tests -p 'test_source_review_record.py' -v \
             2>&1 | tee reports/source-review-record/tests.log
 
+      - name: Validate benchmark arithmetic and disclosures
+        id: review
+        continue-on-error: true
+        shell: bash
+        run: |
+          set -o pipefail
+          python scripts/validate_daily_review.py \
+            reports/daily-seeker-review-20260723.json \
+            2>&1 | tee reports/source-review-record/daily-review.log
+
       - name: Build documentation in strict mode
         id: docs
         continue-on-error: true
@@ -100,6 +112,7 @@ jobs:
           printf '%s\n' \
             "record=${{ steps.record.outcome }}" \
             "tests=${{ steps.tests.outcome }}" \
+            "review=${{ steps.review.outcome }}" \
             "docs=${{ steps.docs.outcome }}" \
             > reports/source-review-record/outcomes.txt
           python --version > reports/source-review-record/python-version.txt 2>&1 || true
@@ -108,8 +121,12 @@ jobs:
             docs/source-review-record.md \
             docs/examples/source-review-record-v1.json \
             scripts/validate_source_review_record.py \
+            scripts/validate_daily_review.py \
             tests/test_source_review_record.py \
+            reports/daily-seeker-review-20260723.md \
+            reports/daily-seeker-review-20260723.json \
             mkdocs.yml \
+            .github/workflows/source-review-record.yml \
             > reports/source-review-record/source-SHA256SUMS
           find site -type f -print0 2>/dev/null | sort -z | xargs -0 -r sha256sum \
             > reports/source-review-record/site-SHA256SUMS 2>/dev/null || true
@@ -148,4 +165,5 @@ jobs:
         run: |
           test "${{ steps.record.outcome }}" = "success"
           test "${{ steps.tests.outcome }}" = "success"
+          test "${{ steps.review.outcome }}" = "success"
           test "${{ steps.docs.outcome }}" = "success"
