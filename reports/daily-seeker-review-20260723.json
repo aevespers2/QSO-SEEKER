@@ -9,8 +9,9 @@
   "scope": {
     "primary_repository": "aevespers2/QSO-SEEKER",
     "portfolio_repositories_inspected": 19,
-    "source_generation": "1038a3497712fc270195adcaed05b4cc1c9696eb",
-    "focused_candidate": "automation/daily-review-record-20260723",
+    "source_generation": "49e7ff008b04fd386ad86bd3881105821c4b55e6",
+    "focused_candidate": "repair/reconcile-pr13-20260721",
+    "evidence_status": "VALIDATED_PARENT_REVALIDATE_DESCENDANTS",
     "human_assistance_disclosed": true,
     "external_blind_agi_benchmark": false
   },
@@ -24,8 +25,8 @@
     ],
     "weighted_raw": 80.70,
     "penalties": [
-      {"points": 2, "reason": "The inherited Documentation workflow is keyed by ref and cancels in-progress runs, so earlier exact-head evidence can be lost."},
-      {"points": 1, "reason": "Planning records required reconciliation after the source-rights milestone and exact-head evidence moved."}
+      {"points": 2, "reason": "The inherited Documentation and Security Envelope workflows are keyed by ref and cancel in-progress runs, so earlier exact-head evidence can be lost."},
+      {"points": 1, "reason": "Planning and evidence records required reconciliation after the source-rights milestone, strict-parser repair, and exact-head evidence moved."}
     ],
     "penalty_total": 3,
     "final_score": 77.70,
@@ -96,7 +97,7 @@
     "interpretation": "Daily engineering and evaluation progress, not a claim of general intelligence."
   },
   "bounded_improvement": {
-    "name": "Fail-closed source-review record evidence",
+    "name": "Fail-closed source-review record evidence and strict-parser repair",
     "quality_gain": 5,
     "complexity_reduction": 3,
     "integration_benefit": 5,
@@ -105,29 +106,50 @@
     "verification_cost": 2,
     "runtime_scope_change": false,
     "authority_expansion": false,
-    "pre_report_diff": {
-      "additions": 771,
+    "accepted_diff": {
+      "additions": 1467,
       "deletions": 6,
       "runtime_product_code_added": 0,
-      "validation_code_added": 346,
-      "tests_added": 82,
-      "workflow_lines_added": 151,
-      "documentation_fixture_navigation_added": 185
+      "validation_code_added": 592,
+      "tests_added": 113,
+      "workflow_lines_added": 233,
+      "documentation_fixture_report_navigation_added": 522,
+      "planning_lines_added": 7,
+      "planning_lines_removed": 6
     }
   },
-  "strongest_validated_gain": "A source-review request can now be checked for purpose, consumer, privacy, publication, validity, withdrawal, and authority contradictions using a synthetic fixture, hostile tests, strict documentation construction, exact-SHA CI, and retained evidence.",
-  "most_important_failure": "The inherited Documentation workflow still uses ref-level concurrency with cancel-in-progress enabled, so its evidence continuity is weaker than the new focused workflow.",
+  "validated_parent_evidence": {
+    "head": "49e7ff008b04fd386ad86bd3881105821c4b55e6",
+    "runs": {
+      "source_review_record": 30062851717,
+      "documentation": 30062851723,
+      "security_envelope": 30062851704,
+      "consent_capacity_lock": 30062851750
+    },
+    "artifacts": {
+      "source_review_record": 8585156401,
+      "documentation": 8585153125,
+      "security_envelope": 8585153242,
+      "consent_capacity_lock": 8585152093
+    }
+  },
+  "strongest_validated_gain": "A source-review request can now be checked for purpose, consumer, operation, privacy, publication, validity, withdrawal, ambiguous JSON, non-standard constants, type confusion, and authority contradictions using a synthetic fixture, thirteen hostile tests, the complete repository suite, strict documentation construction, exact-SHA CI, and retained evidence.",
+  "most_important_failure": "The inherited Documentation and Security Envelope workflows still use ref-level concurrency with cancel-in-progress enabled, so their evidence continuity is weaker than the focused workflow.",
   "regressions_and_mistakes": [
+    "The initial source-review loader used permissive JSON parsing and would accept duplicate keys and non-standard constants; strict UTF-8, duplicate-key rejection, and constant rejection were added.",
+    "The initial validator parsed not_before but did not enforce it, and its workflow evaluation instant was before the fixture's declared validity window; both were repaired.",
+    "The initial retention integer check accepted booleans because Python bool is an int subclass; explicit boolean rejection was added.",
     "A local expiry regression initially used a UTC instant before the fixture's -07:00 expiry; the fixture time was corrected before repository submission.",
-    "No critical safety, authorization, data-integrity, or hidden-failure regression was observed in the focused candidate."
+    "No critical safety, authorization, privacy, data-integrity, hidden-failure, or default-branch regression remained after the final exact-head replay."
   ],
   "skill_tree": {
     "atlas": "FYSA-120 v1.0.0",
     "validated_nodes": ["009-B", "009-D", "009-E", "012-A", "012-B", "012-D", "012-E", "017-C", "017-D", "017-E", "018-B", "018-E", "022-A", "022-C", "022-D", "022-E", "031-A", "031-D", "031-E", "033-A", "033-E", "052-B", "052-E", "054-B", "054-E", "059-E"],
     "proposed_refinements": [
       "018-F — extend source-rights, privacy, and publication-disposition records with machine-readable contradiction testing and request-to-decision scope binding.",
-      "009-F — longitudinal agent-benchmark calibration, cross-day evidence reconciliation, gate application, and human-assistance disclosure."
+      "009-F — longitudinal agent-benchmark calibration, cross-day evidence reconciliation, gate application, and human-assistance disclosure.",
+      "031-T — strict structured-record ambiguity rejection, temporal-window enforcement, and type-confusion regression testing."
     ]
   },
-  "next_bounded_experiment": "Repair the inherited Documentation workflow to use immutable-SHA non-cancelling concurrency and terminal failure-artifact continuity, then verify both focused and resulting PR #14 heads without merging to main."
+  "next_bounded_experiment": "Repair the inherited Documentation and Security Envelope workflows to use immutable-SHA non-cancelling concurrency and terminal failure-artifact continuity, then verify both focused and resulting PR #14 heads without merging to main."
 }
