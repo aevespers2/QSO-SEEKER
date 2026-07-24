@@ -11,8 +11,8 @@ permissions:
   contents: read
 
 concurrency:
-  group: security-envelope-${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+  group: security-envelope-${{ github.workflow }}-${{ github.event.pull_request.head.sha || github.sha }}
+  cancel-in-progress: false
 
 jobs:
   verify:
