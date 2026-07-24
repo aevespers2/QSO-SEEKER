@@ -1,0 +1,68 @@
+{
+  "schema": "qso-seeker.source-review-record",
+  "version": 1,
+  "status": "DOCUMENTED_NOT_AUTHORIZED",
+  "review_id": "synthetic-source-review-0001",
+  "source": {
+    "class": "clearly-licensed-public-documentation",
+    "locator_policy": "canonical-public-url-only; no private locators stored",
+    "terms_snapshot_digest": "be7b4bdb7a6e918e258cf94ab997552e79b198b86600b69c4902e6ef1cc5e5d9",
+    "license_id": "SYNTHETIC-DOCUMENTATION-ONLY",
+    "contains_private_locator": false
+  },
+  "request": {
+    "purpose": "validate-documentation-fixture",
+    "consumer": "documentation-validator",
+    "operation": "sanitize",
+    "requested_privacy_class": "PUBLIC_SYNTHETIC",
+    "publication_requested": false
+  },
+  "decision": {
+    "state": "REVIEW_REQUIRED",
+    "approved_purpose": "validate-documentation-fixture",
+    "allowed_consumers": [
+      "documentation-validator"
+    ],
+    "allowed_operations": [],
+    "output_privacy_class": "PUBLIC_SYNTHETIC",
+    "publication_approved": false,
+    "issued_at": "2026-07-23T19:00:00-07:00",
+    "not_before": "2026-07-23T19:00:00-07:00",
+    "expires_at": "2026-08-22T19:00:00-07:00",
+    "withdrawn_at": null,
+    "owner_role": "unassigned-human-decision-owner",
+    "reviewer_role": "documentation-reviewer"
+  },
+  "retention": {
+    "max_days": 0,
+    "deletion_authority": "unassigned",
+    "legal_hold_authority": "unassigned"
+  },
+  "authority": {
+    "retrieval": false,
+    "processing": false,
+    "retention": false,
+    "handoff": false,
+    "publication": false,
+    "credentials": false,
+    "network": false,
+    "repository_write": false
+  },
+  "provenance": {
+    "source_digest": "8359b39549903b24ce4562900410285abb2a6f98c940d98925b479b70ce2c410",
+    "decision_evidence_digest": "5e4588a5df5461f43d12493ae12c97452889a2dfbd239d11906b0d9ebf3166da",
+    "policy_references": [
+      "docs/source-rights-and-privacy-review.md",
+      "docs/source-review-record.md"
+    ]
+  },
+  "supersession": {
+    "supersedes": null,
+    "correction_of": null
+  },
+  "uncertainty": [
+    "synthetic documentation fixture",
+    "no source-specific legal, privacy, retention, or publication decision"
+  ],
+  "fail_closed_condition": "Any unresolved authority, evidence gap, field mismatch, expiry, withdrawal, or publication request keeps the route closed."
+}
