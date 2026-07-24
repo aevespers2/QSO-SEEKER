@@ -6,7 +6,6 @@ It validates the documentation fixture and request/decision consistency. It
 does not grant retrieval, processing, retention, handoff, or publication
 authority.
 """
-
 from __future__ import annotations
 
 import argparse
@@ -115,6 +114,19 @@ def _digest(value: Any, name: str) -> str:
     if not SHA256_RE.fullmatch(text):
         raise RecordValidationError(f"{name} must be a lowercase SHA-256 digest")
     return text
+
+
+def _strict_object(pairs: list[tuple[str, Any]]) -> dict[str, Any]:
+    value: dict[str, Any] = {}
+    for key, item in pairs:
+        if key in value:
+            raise RecordValidationError(f"duplicate JSON key: {key}")
+        value[key] = item
+    return value
+
+
+def _reject_constant(token: str) -> Any:
+    raise RecordValidationError(f"non-standard JSON constant: {token}")
 
 
 def validate_record(record: dict[str, Any], *, now: datetime | None = None) -> None:
@@ -266,6 +278,8 @@ def validate_record(record: dict[str, Any], *, now: datetime | None = None) -> N
     if now is not None:
         if now.tzinfo is None or now.utcoffset() is None:
             raise RecordValidationError("now must be timezone-aware")
+        if now < not_before:
+            raise RecordValidationError("NOT_YET_VALID")
         if now >= expires_at and state != "EXPIRED":
             raise RecordValidationError("EXPIRED_STATE_REQUIRED")
         if now < expires_at and state == "EXPIRED":
@@ -278,7 +292,11 @@ def validate_record(record: dict[str, Any], *, now: datetime | None = None) -> N
         "legal_hold_authority",
     }:
         raise RecordValidationError("retention keys mismatch")
-    if not isinstance(retention["max_days"], int) or retention["max_days"] < 0:
+    if (
+        not isinstance(retention["max_days"], int)
+        or isinstance(retention["max_days"], bool)
+        or retention["max_days"] < 0
+    ):
         raise RecordValidationError(
             "retention.max_days must be a non-negative integer"
         )
@@ -320,7 +338,14 @@ def validate_record(record: dict[str, Any], *, now: datetime | None = None) -> N
 
 def load_record(path: Path) -> dict[str, Any]:
     try:
-        data = json.loads(path.read_text(encoding="utf-8"))
+        text = path.read_bytes().decode("utf-8", errors="strict")
+        data = json.loads(
+            text,
+            object_pairs_hook=_strict_object,
+            parse_constant=_reject_constant,
+        )
+    except RecordValidationError:
+        raise
     except (OSError, UnicodeError, json.JSONDecodeError) as exc:
         raise RecordValidationError(f"unable to load JSON record: {exc}") from exc
     return _object(data, "record")
