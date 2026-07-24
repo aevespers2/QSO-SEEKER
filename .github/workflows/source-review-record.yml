@@ -76,7 +76,7 @@ jobs:
           set -o pipefail
           python scripts/validate_source_review_record.py \
             docs/examples/source-review-record-v1.json \
-            --now 2026-07-24T00:00:00+00:00 \
+            --now 2026-07-24T03:00:00+00:00 \
             2>&1 | tee reports/source-review-record/validator.log
 
       - name: Run hostile contradiction regressions
