@@ -3,6 +3,7 @@ from __future__ import annotations
 import copy
 import importlib.util
 import json
+import tempfile
 import unittest
 from datetime import datetime
 from pathlib import Path
@@ -28,7 +29,7 @@ class SourceReviewRecordTests(unittest.TestCase):
     def test_valid_synthetic_fixture(self) -> None:
         MODULE.validate_record(
             self.record,
-            now=datetime.fromisoformat("2026-07-24T00:00:00+00:00"),
+            now=datetime.fromisoformat("2026-07-24T03:00:00+00:00"),
         )
 
     def test_expired_record_requires_expired_state(self) -> None:
@@ -38,6 +39,13 @@ class SourceReviewRecordTests(unittest.TestCase):
             MODULE.validate_record(
                 self.record,
                 now=datetime.fromisoformat("2026-08-24T00:00:00+00:00"),
+            )
+
+    def test_not_before_window_fails_closed(self) -> None:
+        with self.assertRaisesRegex(MODULE.RecordValidationError, "NOT_YET_VALID"):
+            MODULE.validate_record(
+                self.record,
+                now=datetime.fromisoformat("2026-07-24T00:00:00+00:00"),
             )
 
     def test_withdrawal_timestamp_requires_withdrawn_state(self) -> None:
@@ -76,6 +84,29 @@ class SourceReviewRecordTests(unittest.TestCase):
         record = copy.deepcopy(self.record)
         record["decision"]["allowed_operations"] = ["sanitize"]
         self.assert_invalid(record, "REVIEW_REQUIRED must not retain allowed operations")
+
+    def test_duplicate_json_key_fails_closed(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "duplicate.json"
+            path.write_text('{"schema":"x","schema":"y"}', encoding="utf-8")
+            with self.assertRaisesRegex(
+                MODULE.RecordValidationError, "duplicate JSON key: schema"
+            ):
+                MODULE.load_record(path)
+
+    def test_non_standard_json_constant_fails_closed(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "nan.json"
+            path.write_text('{"value":NaN}', encoding="utf-8")
+            with self.assertRaisesRegex(
+                MODULE.RecordValidationError, "non-standard JSON constant: NaN"
+            ):
+                MODULE.load_record(path)
+
+    def test_boolean_retention_days_is_rejected(self) -> None:
+        record = copy.deepcopy(self.record)
+        record["retention"]["max_days"] = False
+        self.assert_invalid(record, "non-negative integer")
 
 
 if __name__ == "__main__":
